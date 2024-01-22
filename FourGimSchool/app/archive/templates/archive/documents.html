@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container box_1170">
+    <h1 class="text-center mb-30 mt-5">Список документов</h1>
+    <div class="progress-table-wrap">
+        <div class="progress-table m-5">
+            <div class="table-head">
+                <div class="serial">#</div>
+                <div class="country">Название</div>
+                <div class="visit">Время публикации</div>
+                <div class="percentage">Скачивание и Копирование</div>
+            </div>
+      {% for document in documents %}
+            <div class="table-row">
+                <div class="serial">{{ document.pk }}</div>
+                <div class="country"><a href="{% url 'archive:download_document' document_id=document.id %}">{{ document.title }}</a></div>
+              <div class="visit"><a href="{% url 'archive:download_document' document_id=document.id %}">{{ document.time_create }}</a></div>
+                <div class="percentage">
+<!--                    <div class="progress">-->
+                        <a href="{% url 'archive:download_document' document_id=document.id %}" class="genric-btn info large" style="width: 100%">Скачать</a>
+                        <div class="share-button ml-2">
+                    <button id="copyButton" class="genric-btn warning" style="width: 200px">Копировать ссылку</button>
+                        <input type="text" value="{% url 'archive:download_document' document_id=document.id %}" id="copyTarget" style="display: none;">
+                    <script>
+                        // JavaScript-код для копирования указанной ссылки в буфер обмена
+                        document.getElementById('copyButton').addEventListener('click', function() {
+                            var copyTarget = document.getElementById('copyTarget');
+                            copyTarget.select();
+                            document.execCommand('copy');
+                            alert('Ссылка скопирована в буфер обмена!' + copyTarget.value);
+                        });
+                    </script>
+                </div>
+
+<!--                    </div>-->
+                </div>
+            </div>
+      {% endfor %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

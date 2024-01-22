@@ -1,0 +1,294 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Education</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/responsive.css' %}"> -->
+    <title>{{ title }} - Страница</title>
+</head>
+
+<body>
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+    <!-- header-start -->
+    <header>
+        <div class="header-area ">
+            <div class="header-top_area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="header_top_wrap d-flex justify-content-between align-items-center">
+                                <div class="text_wrap">
+                                    <p><span>+996 701 500 422</span> <span>zt20061113@gmail.com</span></p>
+                                </div>
+                                <div class="text_wrap">
+                                    {% if user.is_authenticated %}
+                                        <p><a href="{% url 'accounts:profile' %}"><i class="ti-user"></i> Привет, {{ user.username }}!</a> <a href="{% url 'accounts:logout' %}">Выход</a></p>
+                                    {% else %}
+                                        <p><a href="{% url 'accounts:login' %}"><i class="ti-user"></i> Войти</a> <a href="{% url 'accounts:register' %}">Регистрация</a></p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="sticky-header" class="main-header-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="header_wrap d-flex justify-content-between align-items-center">
+                                <div class="header_left">
+                                    <div class="logo">
+                                        <a href="{% url 'main:index' %}">
+                                            <img src="{% static 'logo.png' %}" alt="">
+
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="header_right d-flex align-items-center">
+                                    <div class="main-menu  d-none d-lg-block">
+                                        <nav>
+                                            <ul id="navigation">
+                                                <li><a  href="{% url 'main:index' %}">Главная <i class="ti-angle-down"></i></a>
+                                                    <ul class="submenu">
+                                                        <li><a  href="{% url 'main:index' %}">Главная </a>
+                                                        <li><a href="{% url 'main:rules' %}">Правило Школы</a></li>
+<!--                                                        <li><a href="#">Электронные Книги</a></li>-->
+                                                        <li><a href="{% url 'main:feedback' %}">Отзывы Пользователей</a></li>
+                                                        <li><a href="{% url 'main:contact' %}">Контакты</a></li>
+                                                        <li><a href="{% url 'main:about' %}">О Нас</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="{% url 'personal:personal' %}">Персонал <i class="ti-angle-down"></i></a>
+                                                    <ul class="submenu">
+                                                        <li><a href="{% url 'personal:personal' %}">Персонал</a>
+                                                        <li><a href="#">Администрация</a></li>
+                                                        <li><a href="#">Учителя</a></li>
+                                                        <li><a href="{% url 'personal:classes' %}">Классы</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="{% url 'news:index' %}">Новости <i class="ti-angle-down"></i></a>
+                                                    <ul class="submenu">
+                                                        <li><a href="{% url 'news:index' %}">Новости</a>
+                                                        <li><a href="#">Событие</a></li>
+                                                        <li><a href="#">Блог</a></li>
+                                                        <li><a href="#">Форум</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="#">Достижение <i class="ti-angle-down"></i></a>
+                                                    <ul class="submenu">
+                                                        <li><a href="#">Лучшие ученики</a></li>
+                                                        <li><a href="#">Достижение учеников</a></li>
+                                                        <li><a href="#">Достижение учителей</a></li>
+                                                        <li><a href="#">Соревновательные достижение</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <div class="Appointment">
+                                        <div class="book_btn d-none d-lg-block">
+                                            <a href="{% url 'main:add_feedback' %}">Оставить Отзыв</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header-end -->
+
+    {% block content %}{% endblock %}
+
+    <!-- footer start -->
+    <footer class="footer">
+        <div class="footer_top">
+            <div class="container">
+                <div class="newsLetter_wrap">
+                    <div class="row justify-content-between">
+                        <div class="col-md-7">
+                            <div class="footer_widget">
+                                <h3 class="footer_title">
+                                    Поиск на сайте
+                                </h3>
+                                <form action="#" class="newsletter_form">
+                                    {{ search_form.query }}
+<!--                                    <input type="text" placeholder="Email Address">-->
+                                    <button type="submit">Поискать сейчас</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-5">
+                            <div class="footer_widget">
+                                <h3 class="footer_title">
+                                    Подпишись на соц. сети
+                                </h3>
+                                <div class="socail_links">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <i class="ti-facebook"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-google-plus"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-linkedin"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 col-lg-3">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">
+                                О Нас
+                            </h3>
+                            <ul>
+                                <li><a href="#">Онлайн обучение</a></li>
+                                <li><a href="{% url 'main:about' %}">О Нас</a></li>
+                                <li><a href="#">Карьера</a></li>
+                                <li><a href="#">Пресс-центр</a></li>
+                                <li><a href="#">Стать инструктором</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-lg-3">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">
+                                Кампус
+                            </h3>
+                            <ul>
+                                <li><a href="#">Наши планы</a></li>
+                                <li><a href="#">Бесплатная пробная версия</a></li>
+                                <li><a href="#">Академические решения</a></li>
+                                <li><a href="#">Бизнес решения</a></li>
+                                <li><a href="#">Государственные решения</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-lg-3">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">
+                                Изучать
+                            </h3>
+                            <ul>
+                                <li><a href="#">Политика приема</a></li>
+                                <li><a href="#">Начиная</a></li>
+                                <li><a href="#">Информация о визе</a></li>
+                                <li><a href="#">Калькулятор стоимости обучения</a></li>
+                                <li><a href="#">Запрашивать информацию</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-lg-3">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">
+                                Поддерживать
+                            </h3>
+                            <ul>
+                                <li><a href="#">Поддерживать</a></li>
+                                <li><a href="#">Связаться с нами</a></li>
+                                <li><a href="#">Системные Требования</a></li>
+                                <li><a href="{% url 'main:feedback' %}">Оставить отзыв</a></li>
+                                <li><a href="mailto: zt20061113@gmail.com">Обратная связь с сайтом</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copy-right_text">
+            <div class="container">
+                <div class="footer_border"></div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <p class="copy_right text-center">
+                            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> Copyright © 2024 Все права защищены | Этот сайт сделан c<i class="ti-heart" aria-hidden="true"></i> от <a href="mailto:zt20061113@gmail.com" target="_blank">Zhyrgal Tagaibekov</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer end  -->
+
+
+    <!-- JS here -->
+    <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/ajax-form.js' %}"></script>
+    <script src="{% static 'js/waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/scrollIt.js' %}"></script>
+    <script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static 'js/wow.min.js' %}"></script>
+    <script src="{% static 'js/nice-select.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'js/gijgo.min.js' %}"></script>
+
+    <!--contact js-->
+    <script src="{% static 'js/contact.js' %}"></script>
+    <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'js/jquery.form.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/mail-script.js' %}"></script>
+
+    <script src="{% static 'js/main.js' %}"></script>
+
+</body>
+
+</html>

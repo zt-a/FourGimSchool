@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container box_1170">
+  <div class="row mb-5 mt-5">
+    <div class="col-12 justify-content-center align-items-center">
+        <form method="post" class="needs-validation"novalidate enctype="multipart/form-data">
+        <h1 class="card-title text-center mb-4">Регистрация</h1>
+          {% csrf_token %}
+          <p class="text-warning" style="font-size: 0.9em;">
+            {{ form.non_field_errors }}
+          </p>
+          <div class="mb-3">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+              <p class="text-warning" style="font-size: 0.9em;">
+                {{ form.username.errors }}
+              </p>
+          </div>
+          <div class="mb-3">
+            {{ form.first_name.label_tag }}
+            {{ form.first_name }}
+              <p class="text-warning" style="font-size: 0.9em;">
+                {{ form.first_name.errors }}
+              </p>
+          </div>
+          <div class="mb-3">
+            {{ form.last_name.label_tag }}
+            {{ form.last_name }}
+              <p class="text-warning" style="font-size: 0.9em;">
+                {{ form.last_name.errors }}
+              </p>
+          </div>
+          <div class="mb-3">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+              <p class="text-warning" style="font-size: 0.9em;">
+                {{ form.email.errors }}
+              </p>
+          </div>
+          <div class="mb-3">
+            {{ form.birthdate.label_tag }}
+            {{ form.birthdate }}
+              <p class="text-warning" style="font-size: 0.9em;">
+                {{ form.birthdate.errors }}
+              </p>
+          </div>
+          <div class="mb-3">
+            {{ form.phone_number.label_tag }}
+            {{ form.phone_number }}
+              <p class="text-warning" style="font-size: 0.9em;">
+                {{ form.phone_number.errors }}
+              </p>
+          </div>
+          <div class="mb-3">
+            {{ form.profile_image.label_tag }}
+            {{ form.profile_image }}
+              <p class="text-warning" style="font-size: 0.9em;">
+                {{ form.profile_image.errors }}
+              </p>
+          </div>
+          <div class="mb-3">
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+              <p class="text-warning" style="font-size: 0.9em;">
+                {{ form.password1.errors }}
+              </p>
+          </div>
+          <div class="mb-3">
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+              <p class="text-warning" style="font-size: 0.9em;">
+                {{ form.password2.errors }}
+              </p>
+          </div>
+          <button type="submit" class="genric-btn success large" style="float: right;">Зарегистрироваться</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container box-1170">
+    <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Класс</th>
+      <th scope="col">Учитель класса</th>
+      <th scope="col">Номер кабинета</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for class in classes %}
+        <tr>
+          <th scope="row">{{ class.pk }}</th>
+          <td><a href="{% url 'personal:class_detail' slug=class.slug %}">{{ class.class_name }}</a></td>
+          <td><a href="{% url 'personal:class_detail' slug=class.slug %}">{{ class.class_teacher }}</a></td>
+          <td>{{ class.classroom_number }}</td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+{% endblock %}

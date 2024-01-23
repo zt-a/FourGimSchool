@@ -3,6 +3,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 import uuid
+from autoslug import AutoSlugField
 
 
 class SubjectModel(models.Model):
@@ -10,6 +11,10 @@ class SubjectModel(models.Model):
 
     def __str__(self):
         return self.subject_name
+
+    class Meta:
+        verbose_name = 'Предмет'
+        verbose_name_plural = 'Предметы'
 
 
 class PersonalModel(models.Model):
@@ -32,10 +37,15 @@ class PersonalModel(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
+    class Meta:
+        verbose_name = 'Персонал'
+        verbose_name_plural = 'Персоналы'
+        ordering = ['-work_experience', '-age', '-time_create', 'id']
+
 
 class SchedulesModel(models.Model):
-    class_name = models.CharField(max_length=3, verbose_name='Название класса')
-    slug = models.SlugField(max_length=3, unique=True, db_index=True, verbose_name='URL')
+    class_name = models.CharField(max_length=10, verbose_name='Название класса')
+    slug = AutoSlugField(populate_from='class_name', max_length=10, unique=True, db_index=True, verbose_name='URL')
 
     day1example1 = models.CharField(max_length=30, verbose_name='День 1 урок 1')
     day1example2 = models.CharField(max_length=30, verbose_name='День 1 урок 2')
@@ -77,39 +87,44 @@ class SchedulesModel(models.Model):
     is_published = models.BooleanField(verbose_name='Публикация', default=True)
 
     def __str__(self):
-        return self.slug
+        return f'{self.class_name} {self.slug}'
 
     def get_absolute_url(self):
         return reverse('schedule', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.class_name)
+        # self.slug = slugify(self.class_name)
         super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Расписания'
         verbose_name_plural = 'Расписании'
-        ordering = ['-time_create', 'id']
+        ordering = ['class_name', '-time_create', 'id']
 
 
 class ClassModel(models.Model):
     class_name = models.CharField(max_length=3, verbose_name='Название класса', unique=True)
     class_teacher = models.OneToOneField(PersonalModel, on_delete=models.SET_NULL, null=True, blank=True,
                                          verbose_name='Классный руководитель')
-    class_schedule = models.ForeignKey(SchedulesModel, on_delete=models.CASCADE, verbose_name='Расписание', null=True, blank=True)
+    class_schedule = models.ForeignKey(SchedulesModel, on_delete=models.CASCADE, verbose_name='Расписание', null=True,
+                                       blank=True)
     classroom_number = models.CharField(max_length=10, verbose_name='Номер кабинета', null=True, blank=True, )
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Дата последнего обновления')
     is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
 
     # Добавляем поле slug
-    slug = models.SlugField(unique=True, default=uuid.uuid4, editable=True, verbose_name='Slug')
+    slug = AutoSlugField(populate_from='class_name', unique=True, default=uuid.uuid4, editable=True,
+                         verbose_name='Slug')
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.class_name)
+        # self.slug = slugify(self.class_name)
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.class_name
 
-
+    class Meta:
+        verbose_name = 'Класс'
+        verbose_name_plural = 'Классы'
+        ordering = ['class_name', '-time_create', 'id']

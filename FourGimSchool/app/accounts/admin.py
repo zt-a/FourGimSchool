@@ -2,5 +2,15 @@ from django.contrib import admin
 from .models import *
 
 
-admin.site.register(UserProfile)
-admin.site.register(CustomUser)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('id', 'username', 'first_name', 'last_name', 'phone_number', 'email', 'birthdate')
+    list_display_links = ('id', 'username', 'first_name', 'last_name', )
+
+
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'address')
+    list_display_links = ('id', 'user', )
+
+
+admin.site.register(UserProfile, ProfileAdmin)
+admin.site.register(CustomUser, UserAdmin)

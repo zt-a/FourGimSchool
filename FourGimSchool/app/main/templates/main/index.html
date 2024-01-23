@@ -63,10 +63,10 @@
                         <div class="icon">
                             <i class="flaticon-error"></i>
                         </div>
-                        <div class="service_info">
+                        <a href="{% url 'main:rules' %}"><div class="service_info">
                             <h4>Правило</h4>
                             <p>Учеников</p>
-                        </div>
+                        </div></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
@@ -86,12 +86,12 @@
     <!--/ service_area_start  -->
 
     <!-- popular_program_area_start  -->
-    <div class="popular_program_area section__padding">
+  <div class="popular_program_area section__padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section_title text-center">
-                        <h3>Популярная программа</h3>
+                        <h3>Наши сотрудники</h3>
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                 <div class="col-lg-12">
                     <nav class="custom_tabs text-center">
                         <div class="nav" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Выпускник</a>
+                            <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Выпускник</a>
                             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Аспирант </a>
                             <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Стипендии доктора философии</a>
                             <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact2" role="tab" aria-controls="nav-contact" aria-selected="false">Обучение</a>
@@ -108,41 +108,42 @@
                 </div>
             </div>
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="row">
                         <div class="col-lg-4 col-md-6">
                             <div class="single__program">
                                 <div class="program_thumb">
-                                    <img src="{% static 'img/program/1.png' %}" alt="">
+                                    <img src="/static/img/program/1.png" alt="">
                                 </div>
                                 <div class="program__content">
-                                    <span>сельское хозяйство</span>
-                                    <h4>Chemical engneering</h4>
-                                    <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>                                    <a href="#" class="boxed-btn5">Приминить сейчас</a>
+                                    <span>Директор</span>
+                                    <h4>ФИО</h4>
+                                    <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="single__program">
                                 <div class="program_thumb">
-                                    <img src="{% static 'img/program/2.png' %}" alt="">
+                                    <img src="/static/img/program/2.png" alt="">
                                 </div>
                                 <div class="program__content">
-                                    <span>сельское хозяйство</span>                                    <h4>Mechanical engneering</h4>
+                                    <span>Должность</span>
+                                    <h4>ФИО</h4>
                                     <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-                                    <a href="#" class="boxed-btn5">Приминить сейчас</a>
+
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="single__program">
                                 <div class="program_thumb">
-                                    <img src="{% static 'img/program/3.png' %}" alt="">
+                                    <img src="/static/img/program/3.png" alt="">
                                 </div>
                                 <div class="program__content">
-                                    <span>сельское хозяйство</span>                                    <h4>Bio engneering</h4>
+                                        <span>Должность</span>                                        <h4>ФИО</h4>
                                     <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-                                    <a href="#" class="boxed-btn5">Приминить сейчас</a>
+
                                 </div>
                             </div>
                         </div>
@@ -153,36 +154,36 @@
                             <div class="col-lg-4 col-md-6">
                                 <div class="single__program">
                                     <div class="program_thumb">
-                                        <img src="{% static 'img/program/1.png' %}" alt="">
+                                        <img src="/static/img/program/1.png" alt="">
                                     </div>
                                     <div class="program__content">
-                                        <span>сельское хозяйство</span>                                        <h4>Chemical engneering</h4>
+                                        <span>Должность</span>                                        <h4>ФИО</h4>
                                         <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-                                        <a href="#" class="boxed-btn5">Приминить сейчас</a>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="single__program">
                                     <div class="program_thumb">
-                                        <img src="{% static 'img/program/3.png' %}" alt="">
+                                        <img src="/static/img/program/3.png" alt="">
                                     </div>
                                     <div class="program__content">
-                                        <span>сельское хозяйство</span>                                        <h4>Mechanical engneering</h4>
+                                        <span>Должность</span>                                        <h4>ФИО</h4>
                                         <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-                                        <a href="#" class="boxed-btn5">Приминить сейчас</a>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="single__program">
                                     <div class="program_thumb">
-                                        <img src="{% static 'img/program/2.png' %}" alt="">
+                                        <img src="/static/img/program/2.png" alt="">
                                     </div>
                                     <div class="program__content">
-                                        <span>сельское хозяйство</span>                                        <h4>Bio engneering</h4>
+                                        <span>Должность</span>                                        <h4>ФИО</h4>
                                         <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-                                        <a href="#" class="boxed-btn5">Приминить сейчас</a>
+
                                     </div>
                                 </div>
                             </div>
@@ -193,36 +194,36 @@
                             <div class="col-lg-4 col-md-6">
                                 <div class="single__program">
                                     <div class="program_thumb">
-                                        <img src="{% static 'img/program/3.png' %}" alt="">
+                                        <img src="/static/img/program/3.png" alt="">
                                     </div>
                                     <div class="program__content">
-                                        <span>сельское хозяйство</span>                                        <h4>Chemical engneering</h4>
+                                        <span>Должность</span>                                        <h4>ФИО</h4>
                                         <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-                                        <a href="#" class="boxed-btn5">Приминить сейчас</a>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="single__program">
                                     <div class="program_thumb">
-                                        <img src="{% static 'img/program/2.png' %}" alt="">
+                                        <img src="/static/img/program/2.png" alt="">
                                     </div>
                                     <div class="program__content">
-                                        <span>сельское хозяйство</span>                                        <h4>Mechanical engneering</h4>
+                                        <span>Должность</span>                                        <h4>ФИО</h4>
                                         <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-                                        <a href="#" class="boxed-btn5">Приминить сейчас</a>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="single__program">
                                     <div class="program_thumb">
-                                        <img src="{% static 'img/program/1.png' %}" alt="">
+                                        <img src="/static/img/program/1.png" alt="">
                                     </div>
                                     <div class="program__content">
-                                        <span>сельское хозяйство</span>                                        <h4>Bio engneering</h4>
+                                        <span>Должность</span>                                        <h4>ФИО</h4>
                                         <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-                                        <a href="#" class="boxed-btn5">Приминить сейчас</a>
+
                                     </div>
                                 </div>
                             </div>
@@ -233,36 +234,36 @@
                             <div class="col-lg-4 col-md-6">
                                 <div class="single__program">
                                     <div class="program_thumb">
-                                        <img src="{% static 'img/program/2.png' %}" alt="">
+                                        <img src="/static/img/program/2.png" alt="">
                                     </div>
                                     <div class="program__content">
-                                        <span>сельское хозяйство</span>                                        <h4>Chemical engneering</h4>
+                                        <span>Должность</span>                                        <h4>ФИО</h4>
                                         <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-                                        <a href="#" class="boxed-btn5">Приминить сейчас</a>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="single__program">
                                     <div class="program_thumb">
-                                        <img src="{% static 'img/program/1.png' %}" alt="">
+                                        <img src="/static/img/program/1.png" alt="">
                                     </div>
                                     <div class="program__content">
-                                        <span>сельское хозяйство</span>                                        <h4>Mechanical engneering</h4>
+                                        <span>Должность</span>                                        <h4>ФИО</h4>
                                         <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-                                        <a href="#" class="boxed-btn5">Приминить сейчас</a>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="single__program">
                                     <div class="program_thumb">
-                                        <img src="{% static 'img/program/3.png' %}" alt="">
+                                        <img src="/static/img/program/3.png" alt="">
                                     </div>
                                     <div class="program__content">
-                                        <span>сельское хозяйство</span>                                        <h4>Bio engneering</h4>
+                                        <span>Должность</span>                                        <h4>ФИО</h4>
                                         <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-                                        <a href="#" class="boxed-btn5">Приминить сейчас</a>
+
                                     </div>
                                 </div>
                             </div>
@@ -273,12 +274,13 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="course_all_btn text-center">
-                        <a href="Courses.html" class="boxed-btn4">Посмотреть все курсы</a>
+                        <a href="Courses.html" class="boxed-btn4">Посмотреть вес персонал</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- popular_program_area_end -->
 
     <!-- latest_coures_area_start  -->

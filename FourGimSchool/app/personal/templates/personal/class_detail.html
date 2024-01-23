@@ -18,11 +18,12 @@
                         <div class="event_details_info">
                             <div class="event_info">
                                 <h4>{{ class.class_teacher.first_name }} {{ class.class_teacher.last_name }}</h4>
-                                <p class="time_create">
-                                  <span><i class="flaticon-clock"></i> {{ class.time_create|date:"h:i A" }}</span>
-                                  <span><i class="flaticon-calendar"></i> {{ class.time_create|date:"d M Y" }}</span>
-                                  <span><i class="flaticon-placeholder"></i> Школа гимназия - 4</span>
-                                </p>
+<!--                                <p class="time_create">-->
+<!--                                  <span><i class="flaticon-clock"></i> {{ class.time_create|date:"h:i A" }}</span>-->
+<!--                                  <span><i class="flaticon-calendar"></i> {{ class.time_create|date:"d M Y" }}</span>-->
+<!--                                  <span><i class="flaticon-placeholder"></i> Школа гимназия - 4</span>-->
+<!--                                </p>-->
+								<hr>
                             </div>
                             <p class="event_info_text">{{ class.class_teacher.first_name }} {{ class.class_teacher.last_name }} родились в {{ class.class_teacher.birthday }}.<br>
                                 Препадаёт {{ class.class_teacher.subject_taught }} в школе гимназии №4 в городе Баткен. <br>

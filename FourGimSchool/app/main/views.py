@@ -1,6 +1,37 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
+from django.shortcuts import render
+from django.db.models import Q
+from .models import *
+
+# def search(request):
+#     query = request.GET.get('q', '')
+#
+#     # Поиск в Model1
+#     results_model1 = .objects.filter(
+#         Q(field1__icontains=query) | Q(field2__icontains=query)
+#     )
+#
+#     # Поиск в Model2
+#     results_model2 = Model2.objects.filter(
+#         Q(field3__icontains=query) | Q(field4__icontains=query)
+#     )
+#
+#     # Поиск в Model3
+#     results_model3 = Model3.objects.filter(
+#         Q(field5__icontains=query) | Q(field6__icontains=query)
+#     )
+#
+#     context = {
+#         'query': query,
+#         'results_model1': results_model1,
+#         'results_model2': results_model2,
+#         'results_model3': results_model3,
+#     }
+#
+#     return render(request, 'main/search_results.html', context)
+
 
 
 def index(request):
@@ -66,6 +97,7 @@ def add_feedback(request):
         form = FeedbackForm()
 
     return render(request, 'main/add_feedback.html', {'form': form})
+
 
 def feedback_list(request):
     feedbacks = FeedbackModel.objects.filter(is_published=True).order_by('-time_create')

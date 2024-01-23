@@ -10,4 +10,5 @@ urlpatterns = [
     path('add_feedback/', add_feedback, name='add_feedback'),
     path('rules/', rules, name='rules'),
     path('rules/<slug:slug>/', detail_rules, name='detail_rules'),
+    # path('search/', search, name='search'),
 ]

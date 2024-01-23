@@ -3,7 +3,7 @@ from .models import *
 
 
 class SearchForm(forms.Form):
-    query = forms.CharField(label='Поиск', max_length=255, widget=forms.TextInput(attrs={'placeholder': 'Поиск на на сайте'}))
+    query = forms.CharField(label='Поиск', max_length=255, widget=forms.TextInput(attrs={'placeholder': 'Поиск на сайте'}))
 
 
 class ContactForm(forms.ModelForm):

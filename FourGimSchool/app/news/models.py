@@ -11,7 +11,7 @@ from django.conf import settings
 class News(models.Model):
     title = models.CharField(max_length=255, verbose_name='Заголовок')
     content = models.TextField(verbose_name='Контент')
-    slug = AutoSlugField(max_length=255, unique=True, db_index=True, verbose_name='URL', populate_from='title')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
     photo = models.ImageField(verbose_name='Фотография', upload_to='photos/news/%Y/%m/%d/', null=True, blank=True)
     video = models.FileField(verbose_name='Видео', upload_to='videos/news/%Y/%m/%d/', null=True, blank=True,
                              validators=[FileExtensionValidator(
@@ -32,7 +32,6 @@ class News(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        # Auto-generate slug from the title
         self.slug = slugify(self.title)
         super(News, self).save(*args, **kwargs)
 

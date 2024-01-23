@@ -3,12 +3,12 @@ from .models import *
 
 
 class NewsAdmin(admin.ModelAdmin):
-    list_display = (
-    'id', 'title', 'slug', 'author', 'likes', 'comments_count', 'time_create', 'time_update', 'is_published',)
+    list_display = ('id', 'title', 'slug', 'author', 'likes', 'comments_count', 'time_create', 'time_update', 'is_published',)
     list_display_links = ('id', 'title', 'slug', 'author')
     list_filter = ('is_published',)
     list_editable = ('is_published',)
     prepopulated_fields = {'slug': ('title',)}
+    # exclude = ('slug',)
 
 
 class CommentAdmin(admin.ModelAdmin):

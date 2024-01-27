@@ -12,7 +12,7 @@ class News(models.Model):
     title = models.CharField(max_length=255, verbose_name='Заголовок')
     content = models.TextField(verbose_name='Контент')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
-    photo = models.ImageField(verbose_name='Фотография', upload_to='photos/news/%Y/%m/%d/', null=True, blank=True)
+    photo = models.ImageField(verbose_name='Фотография', upload_to='photos/news/%Y/%m/%d/')
     video = models.FileField(verbose_name='Видео', upload_to='videos/news/%Y/%m/%d/', null=True, blank=True,
                              validators=[FileExtensionValidator(
                                  allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv', 'wmv', 'avi', 'flm', 'ogg'])])

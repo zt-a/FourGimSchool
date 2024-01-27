@@ -37,98 +37,96 @@
                   </div>
                   <div class="navigation-area">
                      <div class="row">
-                        <div
-                           class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
-                           <div class="thumb">
-                              <a href="#">
-                                 <img class="img-fluid" src="img/post/preview.png" alt="">
-                              </a>
-                           </div>
-                           <div class="arrow">
-                              <a href="#">
-                                 <span class="lnr text-white ti-arrow-left"></span>
-                              </a>
-                           </div>
-                           <div class="detials">
-                              <p>Prev Post</p>
-                              <a href="#">
-                                 <h4>Space The Final Frontier</h4>
-                              </a>
-                           </div>
+                        <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                           {% if previous_news %}
+                               <div class="thumb">
+                                  <a href="{% url 'news:news_detail' slug=previous_news.slug %}">
+                                     <img class="img-fluid" src="{{ previous_news.photo.url }}" alt="{{ previous_news.title }}" style="max-height: 50px; width: auto;">
+                                  </a>
+                               </div>
+                               <div class="arrow">
+                                  <a href="{% url 'news:news_detail' slug=previous_news.slug %}">
+                                     <span class="lnr text-white ti-arrow-left"></span>
+                                  </a>
+                               </div>
+                               <div class="detials">
+                                  <p>Предыдущая новость</p>
+                                  <a href="{% url 'news:news_detail' slug=previous_news.slug %}">
+                                     <h4>{{ previous_news.title }}</h4>
+                                  </a>
+                               </div>
+                           {% endif %}
                         </div>
-                        <div
-                           class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
-                           <div class="detials">
-                              <p>Next Post</p>
-                              <a href="#">
-                                 <h4>Telescopes 101</h4>
-                              </a>
-                           </div>
-                           <div class="arrow">
-                              <a href="#">
-                                 <span class="lnr text-white ti-arrow-right"></span>
-                              </a>
-                           </div>
-                           <div class="thumb">
-                              <a href="#">
-                                 <img class="img-fluid" src="img/post/next.png" alt="">
-                              </a>
-                           </div>
+                        <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                           {% if next_news %}
+                               <div class="detials">
+                                  <p>Следующая новость</p>
+                                  <a href="{% url 'news:news_detail' slug=next_news.slug %}">
+                                     <h4>{{ next_news.title }}</h4>
+                                  </a>
+                               </div>
+                               <div class="arrow">
+                                  <a href="{% url 'news:news_detail' slug=next_news.slug %}">
+                                     <span class="lnr text-white ti-arrow-right"></span>
+                                  </a>
+                               </div>
+                               <div class="thumb">
+                                  <a href="{% url 'news:news_detail' slug=next_news.slug %}">
+                                     <img class="img-fluid" src="{{ next_news.photo.url }}" alt="{{ next_news.title }}" style="max-height: 50px; width: auto;">
+                                  </a>
+                               </div>
+                           {% endif %}
                         </div>
                      </div>
                   </div>
                </div>
-               <div class="blog-author">
-                  <div class="media align-items-center">
-                     {% if object.author.profile_image %}
-
-                     <img src="img/blog/author.png" alt="">
-                     {% endif %}
-                     <div class="media-body">
-                        <a href="#">
-                           <h4>{{ object.author.first_name }} {{ object.author.last_name }}</h4>
-                        </a>
-                        <p>Second divided from form fish beast made. Every of seas all gathered use saying you're, he
-                           our dominion twon Second divided from</p>
-                     </div>
-                  </div>
-               </div>
-               <div class="comments-area">
+              <div class="comments-area">
                   <h4>{{ object.comments_count }} Комментариев</h4>
                   {% if latest_comments %}
-                  {% for comment in latest_comments %}
-                  <div class="comment-list">
-                     <div class="single-comment justify-content-between d-flex">
-                        <div class="user justify-content-between d-flex">
-                           <div class="thumb">
-                              {% if comment.author.profile_image %}
-                              <img src="{{ comment.author.profile_image.url }}" alt="{{ comment.author.username }}">
-                              {% endif %}
-                           </div>
-                           <div class="desc">
-                              <p class="comment">
-                                 {{ comment.content }}
-                              </p>
-                              <div class="d-flex justify-content-between">
-                                 <div class="d-flex align-items-center">
-                                    <h5>
-                                       <a href="#">{{ comment.author.first_name }} {{ comment.author.last_name }}</a>
-                                    </h5>
-                                    <p class="date">{{ comment.time_create }}</p>
+                     {% for comment in latest_comments %}
+                        <div class="comment-list">
+                           <div class="single-comment justify-content-between d-flex">
+                              <div class="user justify-content-between d-flex">
+                                 <div class="thumb">
+                                    {% if comment.author.profile_image %}
+                                       <img src="{{ comment.author.profile_image.url }}" alt="{{ comment.author.username }}">
+                                    {% endif %}
                                  </div>
-<!--                                 <div class="reply-btn">-->
-<!--                                    <a href="#" class="btn-reply text-uppercase">reply</a>-->
-<!--                                 </div>-->
+                                 <div class="desc">
+                                    <p class="comment">
+                                       {% autoescape off %}
+                                          {% with comment.content|linebreaksbr as content %}
+                                             {% for word in content.split %}
+                                                {% if word|first == "@" %}
+                                                   <strong>{{ word }}</strong>
+                                                {% else %}
+                                                   {{ word }}
+                                                {% endif %}
+                                             {% endfor %}
+                                          {% endwith %}
+                                       {% endautoescape %}
+                                    </p>
+                                    <div class="d-flex justify-content-between">
+                                       <div class="d-flex align-items-center">
+                                          <h5>
+                                             <a href="#">{{ comment.author.first_name }} {{ comment.author.last_name }}</a>
+                                          </h5>
+                                          <p class="date">{{ comment.time_create }}</p>
+                                       </div>
+                                       <!-- <div class="reply-btn">
+                                          <a href="#" class="btn-reply text-uppercase">reply</a>
+                                       </div> -->
+                                    </div>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                     </div>
-                  </div>
-                  {% endfor %}
+                     {% endfor %}
                   {% else %}
-                  <p class="text-mute">Нет комментариев</p>
+                     <p class="text-mute">Нет комментариев</p>
                   {% endif %}
                </div>
+
                <div class="comment-form">
                   {% if user.is_authenticated %}
 
@@ -157,100 +155,79 @@
             <div class="col-lg-4">
                <div class="blog_right_sidebar">
                   <aside class="single_sidebar_widget search_widget">
-                     <form action="#">
-                        <div class="form-group">
-                           <div class="input-group mb-3">
-                              <input type="text" class="form-control" placeholder='Search Keyword'
-                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
-                              <div class="input-group-append">
-                                 <button class="btn" type="button"><i class="ti-search"></i></button>
-                              </div>
-                           </div>
-                        </div>
-                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                           type="submit">Search</button>
-                     </form>
-                  </aside>
-                  <aside class="single_sidebar_widget post_category_widget">
-                     <h4 class="widget_title">Category</h4>
-                     <ul class="list cat-list">
-                        <li>
-                           <a href="#" class="d-flex">
-                              <p>Resaurant food</p>
-                              <p>(37)</p>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#" class="d-flex">
-                              <p>Travel news</p>
-                              <p>(10)</p>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#" class="d-flex">
-                              <p>Modern technology</p>
-                              <p>(03)</p>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#" class="d-flex">
-                              <p>Product</p>
-                              <p>(11)</p>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#" class="d-flex">
-                              <p>Inspiration</p>
-                              <p>(21)</p>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#" class="d-flex">
-                              <p>Health Care</p>
-                              <p>(21)</p>
-                           </a>
-                        </li>
-                     </ul>
-                  </aside>
+                            <form method="get" action="{% url 'news:index' %}">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="title" placeholder='Поиск Новостей'
+                                               value="{{ request.GET.title }}"
+                                               onfocus="this.placeholder = ''" onblur="this.placeholder = 'Поиск Новостей'">
+                                        <div class="input-group-append">
+                                            <button class="btn" type="submit"><i class="ti-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                    type="submit">Поиск</button>
+                            </form>
+                        </aside>
+                        <aside class="single_sidebar_widget post_category_widget">
+                            <h4 class="widget_title">Страницы</h4>
+                            <ul class="list cat-list">
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>Электронные книги</p>
+                                        <p>(37)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>Событие</p>
+                                        <p>(10)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>Форум</p>
+                                        <p>(03)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>Галерея</p>
+                                        <p>(11)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>Правило</p>
+                                        <p>(21)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>Достижение</p>
+                                        <p>(09)</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </aside>
+
                   <aside class="single_sidebar_widget popular_post_widget">
-                     <h3 class="widget_title">Recent Post</h3>
-                     <div class="media post_item">
-                        <img src="img/post/post_1.png" alt="post">
-                        <div class="media-body">
-                           <a href="single-blog.html">
-                              <h3>From life was you fish...</h3>
-                           </a>
-                           <p>January 12, 2019</p>
-                        </div>
-                     </div>
-                     <div class="media post_item">
-                        <img src="img/post/post_2.png" alt="post">
-                        <div class="media-body">
-                           <a href="single-blog.html">
-                              <h3>The Amazing Hubble</h3>
-                           </a>
-                           <p>02 Hours ago</p>
-                        </div>
-                     </div>
-                     <div class="media post_item">
-                        <img src="img/post/post_3.png" alt="post">
-                        <div class="media-body">
-                           <a href="single-blog.html">
-                              <h3>Astronomy Or Astrology</h3>
-                           </a>
-                           <p>03 Hours ago</p>
-                        </div>
-                     </div>
-                     <div class="media post_item">
-                        <img src="img/post/post_4.png" alt="post">
-                        <div class="media-body">
-                           <a href="single-blog.html">
-                              <h3>Asteroids telescope</h3>
-                           </a>
-                           <p>01 Hours ago</p>
-                        </div>
-                     </div>
-                  </aside>
+                            <h3 class="widget_title">Последние новости</h3>
+
+                            {% for latest_news_item in latest_news %}
+                                <div class="media post_item">
+                                    <img src="{{ latest_news_item.photo.url }}" alt="post" style="max-width: 75px; height: auto;"> <!-- Замените на ваш путь к изображению -->
+                                    <div class="media-body">
+                                        <a href="{% url 'news:news_detail' slug=latest_news_item.slug %}">
+                                            <h3>{{ latest_news_item.title }}</h3>
+                                        </a>
+                                        <p>{{ latest_news_item.time_create|date:"F d, Y" }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </aside>
+
                   <aside class="single_sidebar_widget tag_cloud_widget">
                      <h4 class="widget_title">Tag Clouds</h4>
                      <ul class="list">
@@ -315,17 +292,18 @@
                         </li>
                      </ul>
                   </aside>
-                  <aside class="single_sidebar_widget newsletter_widget">
-                     <h4 class="widget_title">Newsletter</h4>
-                     <form action="#">
+                <aside class="single_sidebar_widget newsletter_widget">
+                    <h4 class="widget_title">Новостная рассылка</h4>
+
+                    <form action="#">
                         <div class="form-group">
-                           <input type="email" class="form-control" onfocus="this.placeholder = ''"
-                              onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+                            <input type="email" class="form-control" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Введите email'" placeholder='Введите email' required>
                         </div>
                         <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                           type="submit">Subscribe</button>
-                     </form>
-                  </aside>
+                            type="submit">Подписаться</button>
+                    </form>
+                </aside>
                </div>
             </div>
          </div>

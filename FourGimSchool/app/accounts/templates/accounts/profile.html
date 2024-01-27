@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Профиль пользователя {{ user_profile.user.username }}</h2>
+<div class="container box-1170">
+    <h2>Профиль пользователя {{ user_profile.user.username }}</h2>
   <p>Биография: {{ user_profile.bio }}</p>
   {% if user_profile.user.profile_image %}
-    <img src="{{ user_profile.user.profile_image.url }}" alt="">
+    <img src="{{ user_profile.user.profile_image.url }}" alt="" height="300px" style="border-radius: 20px">
   {% else %}
     <p>Изображение профиля отсутствует.</p>
   {% endif %}
+</div>
 {% endblock %}

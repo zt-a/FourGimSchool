@@ -20,20 +20,25 @@
 <!--                    <div class="progress">-->
                         <a href="{% url 'archive:download_document' document_id=document.id %}" class="genric-btn info large" style="width: 100%">Скачать</a>
                         <div class="share-button ml-2">
-                    <button id="copyButton" class="genric-btn warning" style="width: 200px">Копировать ссылку</button>
-                        <input type="text" value="{% url 'archive:download_document' document_id=document.id %}" id="copyTarget" style="display: none;">
-                    <script>
-                        // JavaScript-код для копирования указанной ссылки в буфер обмена
-                        document.getElementById('copyButton').addEventListener('click', function() {
-                            var copyTarget = document.getElementById('copyTarget');
-                            copyTarget.select();
-                            document.execCommand('copy');
-                            alert('Ссылка скопирована в буфер обмена!' + copyTarget.value);
-                        });
-                    </script>
+                        <button id="copyButton" class="genric-btn warning" style="width: 200px">Копировать ссылку</button>
+                        <input type="text" value="{{ main_host }}{% url 'archive:download_document' document_id=document.id %}" id="copyTarget" style="display: none;">
+                        <script>
+                            // JavaScript-код для копирования указанной ссылки в буфер обмена
+                            document.getElementById('copyButton').addEventListener('click', function() {
+                                var copyTarget = document.getElementById('copyTarget');
+                                // Отображаем скрытое поле ввода
+                                copyTarget.style.display = 'block';
+                                // Выделяем текст в поле ввода
+                                copyTarget.select();
+                                // Копируем текст в буфер обмена
+                                document.execCommand('copy');
+                                // Скрываем поле ввода
+                                copyTarget.style.display = 'none';
+                                // Оповещаем пользователя
+                                alert('Ссылка скопирована в буфер обмена: ' + copyTarget.value);
+                            });
+                        </script>
                 </div>
-
-<!--                    </div>-->
                 </div>
             </div>
       {% endfor %}

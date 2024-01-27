@@ -21,7 +21,7 @@ class PersonalModel(models.Model):
     first_name = models.CharField(max_length=255, verbose_name='Имя')
     last_name = models.CharField(max_length=255, verbose_name='Фамилия')
     email = models.EmailField(unique=True, verbose_name='Email')
-    subjects_taught = models.ManyToManyField(SubjectModel, verbose_name='Преподаваемые предметы')
+    subjects_taught = models.ManyToManyField(SubjectModel, verbose_name='Преподаваемые предметы или должность')
     address = models.TextField(verbose_name='Адрес')
     phone_number = models.CharField(max_length=15, verbose_name='Номер телефона')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
@@ -128,3 +128,33 @@ class ClassModel(models.Model):
         verbose_name = 'Класс'
         verbose_name_plural = 'Классы'
         ordering = ['class_name', '-time_create', 'id']
+
+
+class StudentModel(models.Model):
+    first_name = models.CharField(max_length=100, verbose_name="Имя")
+    last_name = models.CharField(max_length=100, verbose_name="Фамилия")
+    patronymic = models.CharField(max_length=100, blank=True, null=True, verbose_name="Отчество")
+    date_of_birth = models.DateField(verbose_name="Дата рождения")
+    passport_number = models.CharField(max_length=9, unique=True, verbose_name="Номер паспорта (ID1234567)")
+    inn = models.CharField(max_length=14, unique=True, verbose_name="Персональный номер (ИНН)")
+    citizenship = models.CharField(max_length=50, verbose_name="Гражданство")
+    address = models.TextField(verbose_name="Адрес проживания")
+    school_class = models.ForeignKey(ClassModel, on_delete=models.SET_NULL, null=True)
+
+    gender_choices = [
+        ('M', 'Мужской'),
+        ('F', 'Женский'),
+    ]
+    gender = models.CharField(max_length=1, choices=gender_choices, verbose_name="Пол")
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    time_update = models.DateTimeField(auto_now=True, verbose_name='Дата последнего обновления')
+    is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
+
+    def __str__(self):
+        return f"Паспорт {self.first_name} {self.last_name} {self.patronymic}"
+
+    class Meta:
+        verbose_name = 'Ученик'
+        verbose_name_plural = 'Ученики'
+        ordering = ['id', 'date_of_birth']

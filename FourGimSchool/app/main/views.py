@@ -4,6 +4,8 @@ from .forms import *
 from django.shortcuts import render
 from django.db.models import Q
 from .models import *
+from news.models import News
+from personal.models import PersonalModel
 
 # def search(request):
 #     query = request.GET.get('q', '')
@@ -36,16 +38,21 @@ from .models import *
 
 def index(request):
     feedback_form = FeedbackForm()
+    rules = RulesModel.objects.all()[:3]
+    news = News.objects.all()[:2]
+    personals = PersonalModel.objects.all()[:3]
 
     if feedback_form.is_valid():
         feedback_form.save()
-        # redirect('home')
     search_form = SearchForm()
 
     context = {
         'title': 'Отзыв',
         'feedback_form': feedback_form,
         'search_form': search_form,
+        'rules': rules,
+        'news': news,
+        'personals': personals,
     }
     return render(request, 'main/index.html', context)
 

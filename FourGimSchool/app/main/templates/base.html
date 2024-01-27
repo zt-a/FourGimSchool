@@ -26,7 +26,9 @@
     <link rel="stylesheet" href="{% static 'css/slicknav.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- <link rel="stylesheet" href="{% static 'css/responsive.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/gallery/style_gallery.css' %}">
     <title>{{ title }} - Страница</title>
+    {% block css %}{% endblock %}
 </head>
 
 <body>
@@ -87,8 +89,10 @@
                                                 <li><a href="{% url 'personal:personal' %}">Персонал <i class="ti-angle-down"></i></a>
                                                     <ul class="submenu">
                                                         <li><a href="{% url 'personal:personal' %}">Персонал</a>
-                                                        <li><a href="#">Администрация</a></li>
-                                                        <li><a href="#">Учителя</a></li>
+                                                        {% if user.is_staff or user.is_superuser %}
+                                                        <li><a href="/admin/">Администрация</a></li>
+                                                        {% endif %}
+                                                        <li><a href="{% url 'personal:all_personal' %}">Учителя</a></li>
                                                         <li><a href="{% url 'personal:classes' %}">Классы</a></li>
                                                         <li><a href="{% url 'archive:documents' %}">Архив документов</a></li>
                                                     </ul>
@@ -96,7 +100,7 @@
                                                 <li><a href="{% url 'news:index' %}">Новости <i class="ti-angle-down"></i></a>
                                                     <ul class="submenu">
                                                         <li><a href="{% url 'news:index' %}">Новости</a>
-                                                        <li><a href="#">Событие</a></li>
+                                                        <li><a href="{% url 'event:event_list' %}">Событие</a></li>
                                                         <li><a href="#">Блог</a></li>
                                                         <li><a href="#">Форум</a></li>
                                                     </ul>
@@ -280,6 +284,8 @@
     <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
     <script src="{% static 'js/plugins.js' %}"></script>
     <script src="{% static 'js/gijgo.min.js' %}"></script>
+    <script src="{% static 'js/gallery/script_gallery.js' %}"></script>
+    {% block js %} {% endblock %}
 
     <!--contact js-->
     <script src="{% static 'js/contact.js' %}"></script>

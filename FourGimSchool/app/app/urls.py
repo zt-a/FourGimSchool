@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('main.urls', namespace='main')),
@@ -26,6 +27,10 @@ urlpatterns = [
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('archive/', include('archive.urls', namespace='archive')),
     path('personal/', include('personal.urls', namespace='personal')),
+    path('books/', include('books.urls', namespace='books')),
+    path('history/', include('history.urls', namespace='history')),
+    path('gallery/', include('gallery.urls', namespace='gallery')),
+    path('events/', include('event.urls', namespace='event')),
 ]
 
 if settings.DEBUG:

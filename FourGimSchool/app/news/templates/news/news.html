@@ -13,7 +13,7 @@
 
                             <div class="blog_item_img">
                                 {% if new.photo %}
-                                    <img class="card-img rounded-0" src="{{ new.photo.url }}" alt="">
+                                    <img class="card-img rounded-0  rounded mx-auto d-block" style="max-height: 400px; width: auto" src="{{ new.photo.url }}" alt="">
                                 {% endif %}
                                 <a href="#" class="blog_item_date">
                                     <h3>{{ new.time_create.day }}</h3>
@@ -37,38 +37,43 @@
                         <p class="text-info" style="font-size: 1.2em">Пока что нет новостей</p>
                         {% endif %}
                         <nav class="blog-pagination justify-content-center d-flex">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a href="#" class="page-link" aria-label="Previous">
-                                        <i class="ti-angle-left"></i>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">1</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a href="#" class="page-link">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link" aria-label="Next">
-                                        <i class="ti-angle-right"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a href="?page=1" class="page-link" aria-label="Previous">
+                    <i class="ti-angle-left"></i>
+                </a>
+            </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+            </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link" aria-label="Next">
+                    <i class="ti-angle-right"></i>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="blog_right_sidebar">
                         <aside class="single_sidebar_widget search_widget">
-                            <form action="#">
+                            <form method="get">
                                 <div class="form-group">
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder='Поиск Новостей'
-                                            onfocus="this.placeholder = ''"
-                                            onblur="this.placeholder = 'Поиск Новостей'">
+                                        <input type="text" class="form-control" name="title" placeholder='Поиск Новостей'
+                                               value="{{ request.GET.title }}"
+                                               onfocus="this.placeholder = ''" onblur="this.placeholder = 'Поиск Новостей'">
                                         <div class="input-group-append">
-                                            <button class="btn" type="button"><i class="ti-search"></i></button>
+                                            <button class="btn" type="submit"><i class="ti-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -121,43 +126,20 @@
 
                         <aside class="single_sidebar_widget popular_post_widget">
                             <h3 class="widget_title">Последние новости</h3>
-                            <div class="media post_item">
-                                <img src="img/post/post_1.png" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>From life was you fish...</h3>
-                                    </a>
-                                    <p>January 12, 2019</p>
+
+                            {% for latest_news_item in latest_news %}
+                                <div class="media post_item">
+                                    <img src="{{ latest_news_item.photo.url }}" alt="post" style="max-width: 75px; height: auto;"> <!-- Замените на ваш путь к изображению -->
+                                    <div class="media-body">
+                                        <a href="{% url 'news:news_detail' slug=latest_news_item.slug %}">
+                                            <h3>{{ latest_news_item.title }}</h3>
+                                        </a>
+                                        <p>{{ latest_news_item.time_create|date:"F d, Y" }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="img/post/post_2.png" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>The Amazing Hubble</h3>
-                                    </a>
-                                    <p>02 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="img/post/post_3.png" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>Astronomy Or Astrology</h3>
-                                    </a>
-                                    <p>03 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="img/post/post_4.png" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>Asteroids telescope</h3>
-                                    </a>
-                                    <p>01 Hours ago</p>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </aside>
+
                         <aside class="single_sidebar_widget tag_cloud_widget">
                             <h4 class="widget_title">Tag Clouds</h4>
                             <ul class="list">
@@ -227,15 +209,15 @@
 
 
                         <aside class="single_sidebar_widget newsletter_widget">
-                            <h4 class="widget_title">Newsletter</h4>
+                            <h4 class="widget_title">Новостная рассылка</h4>
 
                             <form action="#">
                                 <div class="form-group">
                                     <input type="email" class="form-control" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+                                        onblur="this.placeholder = 'Введите email'" placeholder='Введите email' required>
                                 </div>
                                 <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                    type="submit">Subscribe</button>
+                                    type="submit">Подписаться</button>
                             </form>
                         </aside>
                     </div>

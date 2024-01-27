@@ -3,11 +3,19 @@ from .models import *
 
 
 def personal(request):
-    return render(request, 'personal/personal.html')
+    personals = PersonalModel.objects.all()[:3]
+    context = {
+        'personals': personals,
+    }
+    return render(request, 'personal/personal.html', context)
 
 
 def all_personal(request):
-    return render(request, 'personal/all_personal.html')
+    personals = PersonalModel.objects.all()
+    context = {
+        'personals': personals,
+    }
+    return render(request, 'personal/all_personal.html', context)
 
 
 def classes(request):

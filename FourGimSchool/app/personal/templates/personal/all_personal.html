@@ -18,18 +18,8 @@
                         <img src="{{ person.profile_picture.url }}" alt="" style="border-radius: 5px; width: auto; max-height: 350px" class="img-fluid rounded mx-auto d-block">
                     </div>
                     <div class="program__content p-4">
-                        {% for subject in person.subject_taught.all %}
-                        <span>{{ subject.subject_name }}</span>
-                        {% endfor %}
-                        <h4>{{ person.first_name }} {{ person.last_name }}</h4>
-                        <p>
-                            E-mail: <a href="mailto: {{ person.email }}">{{ person.email }}</a><br>
-                            Тел. номер: <a href="tel: {{ person.phone_number }}">{{ person.phone_number }}</a><br>
-                            Предметы: {% for subject in person.subject_taught.all %}{{ subject.subject_name }}{% endfor %}<br>
-                            Опыт работы: {{ person.work_experience }}<br>
-                            Дата рождение: {{ person.birthday }}<br>
-                            Возраст: {{ person.age }}<br>
-                        </p>
+                        <h4 class=" h5 text-center mt-2">{{ person.first_name }} {{ person.last_name }}</h4>
+                        <p class="text-center">Предметы: {% for subject in person.subjects_taught.all %} {{ subject.subject_name }} {% endfor %}</p>
                     </div>
                 </div>
             </div>

@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'history.apps.HistoryConfig',
     'gallery.apps.GalleryConfig',
     'event.apps.EventConfig',
+    'blog.apps.BlogConfig',
+    'forum.apps.ForumConfig',
+    'achievement.apps.AchievementConfig',
     'crispy_forms',
 ]
 
@@ -134,7 +137,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    # 'users.backends.TeacherUserBackend',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

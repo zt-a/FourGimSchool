@@ -1,0 +1,39 @@
+<!-- achievement_students.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container box-1170 mb-5 mt-5">
+    {% if achievements_students %}
+    <div class="col-12">
+    <div class="row">
+            <div class="row mb-5 " >
+                <div class="col-lg-12">
+                    <div class="section_title text-center">
+                        <hr>
+                        <h3>Достижение учеников</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for student in achievements_students %}
+                    <div class="col-lg-4 col-md-6 mb-5" >
+                        <div class="single__program" style="background: #f2f6fc;">
+                            <div class="program_thumb">
+                                <img src="{{ student.image_student.url }}" alt="" style="border-radius: 5px; width: auto; max-height: 350px" class="img-fluid rounded mx-auto d-block">
+                                <p class="text-center">{{ student.class_student.class_name }}</p>
+                            </div>
+                            <div class="program__content p-4">
+                                <h4 class=" h5 text-center mt-2">{{ student.full_name }}</h4>
+                                <p>{{ student.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+</div>
+    {% else %}
+    <p>Нет достижений</p>
+    {% endif %}
+</div>
+{% endblock %}

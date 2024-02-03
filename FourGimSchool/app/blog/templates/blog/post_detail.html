@@ -1,0 +1,318 @@
+{% extends 'base.html' %}
+
+
+{% block main_btn %}
+<a href="{% url 'blog:add_post' %}">Добавить пост</a>
+{% endblock %}
+
+
+{% block content %}
+   <!--================Blog Area =================-->
+   <section class="blog_area single-post-area section-padding">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-8 posts-list">
+               <div class="single-post">
+                  <div class="feature-img">
+                     <img class="img-fluid" src="{{ object.photo }}" alt="">
+                  </div>
+                  <div class="blog_details">
+                     <h2>{{ object.title }}</h2>
+                     <ul class="blog-info-link mt-3 mb-4">
+                        <li><a href="#"><i class="fa fa-user"></i> {{ object.author.username }}</a></li>
+                        <li><a href="#"><i class="fa fa-comments"></i> {{ object.comment_count }} Comments</a></li>
+                     </ul>
+                     <p class="excert">
+                         {{ object.content }}
+                     </p>
+                  </div>
+               </div>
+               <div class="navigation-top">
+                  <div class="d-sm-flex justify-content-between text-center">
+                     <p class="like-info"><span class="align-middle"><i class="fa fa-heart"></i></span> {{ object.likes.count }}</p>
+                     <div class="col-sm-4 text-center my-2 my-sm-0">
+                         <p class="comment-count"><span class="align-middle"><i class="fa fa-comment"></i></span> {{ object.comments.count }} Comments</p>
+                     </div>
+                     <ul class="social-icons">
+                        <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                     </ul>
+                  </div>
+                  <div class="navigation-area">
+                     <div class="row">
+                        <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                           {% if previous_post %}
+                               <div class="thumb">
+                                  <a href="{% url 'blog:post_detail' slug=previous_post.slug %}">
+                                     <img class="img-fluid" src="{{ previous_post.photo.url }}" alt="{{ previous_post.title }}" style="max-height: 50px; width: auto;">
+                                  </a>
+                               </div>
+                               <div class="arrow">
+                                  <a href="{% url 'blog:post_detail' slug=previous_post.slug %}">
+                                     <span class="lnr text-white ti-arrow-left"></span>
+                                  </a>
+                               </div>
+                               <div class="detials">
+                                  <p>Предыдущая новость</p>
+                                  <a href="{% url 'blog:post_detail' slug=previous_post.slug %}">
+                                     <h4>{{ previous_post.title }}</h4>
+                                  </a>
+                               </div>
+                           {% endif %}
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                           {% if next_post %}
+                               <div class="detials">
+                                  <p>Следующая новость</p>
+                                  <a href="{% url 'blog:post_detail' slug=next_post.slug %}">
+                                     <h4>{{ next_post.title }}</h4>
+                                  </a>
+                               </div>
+                               <div class="arrow">
+                                  <a href="{% url 'blog:post_detail' slug=next_post.slug %}">
+                                     <span class="lnr text-white ti-arrow-right"></span>
+                                  </a>
+                               </div>
+                               <div class="thumb">
+                                  <a href="{% url 'blog:post_detail' slug=next_post.slug %}">
+                                     <img class="img-fluid" src="{{ next_post.photo.url }}" alt="{{ next_post.title }}" style="max-height: 50px; width: auto;">
+                                  </a>
+                               </div>
+                           {% endif %}
+                        </div>
+                     </div>
+                  </div>
+               </div>
+              <div class="comments-area">
+                  <h4>{{ object.comments_count }} Комментариев</h4>
+                  {% if latest_comments %}
+                     {% for comment in latest_comments %}
+                        <div class="comment-list">
+                           <div class="single-comment justify-content-between d-flex">
+                              <div class="user justify-content-between d-flex">
+                                 <div class="thumb">
+                                    {% if comment.author.profile_image %}
+                                       <img src="{{ comment.author.profile_image.url }}" alt="{{ comment.author.username }}">
+                                    {% endif %}
+                                 </div>
+                                 <div class="desc">
+                                    <p class="comment">
+                                       {% autoescape off %}
+                                          {% with comment.content|linebreaksbr as content %}
+                                             {% for word in content.split %}
+                                                {% if word|first == "@" %}
+                                                   <strong>{{ word }}</strong>
+                                                {% else %}
+                                                   {{ word }}
+                                                {% endif %}
+                                             {% endfor %}
+                                          {% endwith %}
+                                       {% endautoescape %}
+                                    </p>
+                                    <div class="d-flex justify-content-between">
+                                       <div class="d-flex align-items-center">
+                                          <h5>
+                                             <a href="#">{{ comment.author.first_name }} {{ comment.author.last_name }}</a>
+                                          </h5>
+                                          <p class="date">{{ comment.time_create }}</p>
+                                       </div>
+                                       <!-- <div class="reply-btn">
+                                          <a href="#" class="btn-reply text-uppercase">reply</a>
+                                       </div> -->
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     {% endfor %}
+                  {% else %}
+                     <p class="text-mute">Нет комментариев</p>
+                  {% endif %}
+               </div>
+
+               <div class="comment-form">
+                  {% if user.is_authenticated %}
+
+                  <h4>Оставьте комментарий</h4>
+                  <form method="post" class="form-contact comment_form" action="{% url 'blog:add_comment' pk=object.pk %}" id="commentForm">
+                     {% csrf_token %}
+                     <div class="row">
+                        <div class="col-12">
+                           <div class="form-group">
+<!--                              <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9"-->
+<!--                                 placeholder="Write Comment"></textarea>-->
+                              {{ comment_form.content }}
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">Оставить комментарий</button>
+                     </div>
+                  </form>
+                  {% else %}
+                  <h4>Для не зарегистрированных пользователей оставлять комментарий нельзя</h4>
+
+                  {% endif %}
+               </div>
+            </div>
+            <div class="col-lg-4">
+               <div class="blog_right_sidebar">
+                  <aside class="single_sidebar_widget search_widget">
+                            <form method="get" action="{% url 'blog:post_list' %}">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="title" placeholder='Поиск Постов'
+                                               value="{{ request.GET.title }}"
+                                               onfocus="this.placeholder = ''" onblur="this.placeholder = 'Поиск Постов'">
+                                        <div class="input-group-append">
+                                            <button class="btn" type="submit"><i class="ti-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                    type="submit">Поиск</button>
+                            </form>
+                        </aside>
+                        <aside class="single_sidebar_widget post_category_widget">
+                            <h4 class="widget_title">Страницы</h4>
+                            <ul class="list cat-list">
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>Электронные книги</p>
+                                        <p>(37)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>Событие</p>
+                                        <p>(10)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>Форум</p>
+                                        <p>(03)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>Галерея</p>
+                                        <p>(11)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>Правило</p>
+                                        <p>(21)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>Достижение</p>
+                                        <p>(09)</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </aside>
+
+                  <aside class="single_sidebar_widget popular_post_widget">
+                            <h3 class="widget_title">Последние новости</h3>
+
+                            {% for latest_post_item in latest_post %}
+                                <div class="media post_item">
+                                    <img src="{{ latest_post_item.photo.url }}" alt="post" style="max-width: 75px; height: auto;"> <!-- Замените на ваш путь к изображению -->
+                                    <div class="media-body">
+                                        <a href="{% url 'blog:post_detail' pk=latest_post_item.pk %}">
+                                            <h3>{{ latest_post_item.title }}</h3>
+                                        </a>
+                                        <p>{{ latest_post_item.time_create|date:"F d, Y" }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </aside>
+
+                  <aside class="single_sidebar_widget tag_cloud_widget">
+                     <h4 class="widget_title">Tag Clouds</h4>
+                     <ul class="list">
+                        <li>
+                           <a href="#">project</a>
+                        </li>
+                        <li>
+                           <a href="#">love</a>
+                        </li>
+                        <li>
+                           <a href="#">technology</a>
+                        </li>
+                        <li>
+                           <a href="#">travel</a>
+                        </li>
+                        <li>
+                           <a href="#">restaurant</a>
+                        </li>
+                        <li>
+                           <a href="#">life style</a>
+                        </li>
+                        <li>
+                           <a href="#">design</a>
+                        </li>
+                        <li>
+                           <a href="#">illustration</a>
+                        </li>
+                     </ul>
+                  </aside>
+                  <aside class="single_sidebar_widget instagram_feeds">
+                     <h4 class="widget_title">Instagram Feeds</h4>
+                     <ul class="instagram_row flex-wrap">
+                        <li>
+                           <a href="#">
+                              <img class="img-fluid" src="img/post/post_5.png" alt="">
+                           </a>
+                        </li>
+                        <li>
+                           <a href="#">
+                              <img class="img-fluid" src="img/post/post_6.png" alt="">
+                           </a>
+                        </li>
+                        <li>
+                           <a href="#">
+                              <img class="img-fluid" src="img/post/post_7.png" alt="">
+                           </a>
+                        </li>
+                        <li>
+                           <a href="#">
+                              <img class="img-fluid" src="img/post/post_8.png" alt="">
+                           </a>
+                        </li>
+                        <li>
+                           <a href="#">
+                              <img class="img-fluid" src="img/post/post_9.png" alt="">
+                           </a>
+                        </li>
+                        <li>
+                           <a href="#">
+                              <img class="img-fluid" src="img/post/post_10.png" alt="">
+                           </a>
+                        </li>
+                     </ul>
+                  </aside>
+                <aside class="single_sidebar_widget newsletter_widget">
+                    <h4 class="widget_title">Новостная рассылка</h4>
+
+                    <form action="#">
+                        <div class="form-group">
+                            <input type="email" class="form-control" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Введите email'" placeholder='Введите email' required>
+                        </div>
+                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                            type="submit">Подписаться</button>
+                    </form>
+                </aside>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!--================ Blog Area end =================-->
+{% endblock %}

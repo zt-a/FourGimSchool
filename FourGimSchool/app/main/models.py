@@ -22,10 +22,10 @@ class ContactModel(models.Model):
 
 
 class FeedbackModel(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Имя", null=True, blank=True)
+    name = models.CharField(max_length=100, verbose_name="Имя")
     surname = models.CharField(max_length=100, verbose_name="Фамилия", null=True, blank=True)
     email = models.EmailField(verbose_name="E-mail", null=True, blank=True)
-    phone_number = models.CharField(max_length=20, verbose_name='Номер телефона')
+    phone_number = models.CharField(max_length=20, verbose_name='Номер телефона', null=True, blank=True)
     message = models.TextField(verbose_name="Введите отзыв")
     time_create = models.DateTimeField(verbose_name='Время создание', auto_now_add=True)
     time_update = models.DateTimeField(verbose_name='Время обновление', auto_now=True)

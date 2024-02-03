@@ -16,6 +16,9 @@ class GalleryListView(ListView):
         context['form'] = GalleryForm()  # Замените на имя вашей формы
         return context
 
+    def get_queryset(self):
+        return Gallery.objects.filter(is_published=True)
+
 
 class GalleryCreateView(UserPassesTestMixin, CreateView):
     model = Gallery

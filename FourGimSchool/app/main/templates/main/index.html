@@ -91,6 +91,8 @@
 
 
     <!-- recent_news_area_start  -->
+                {% if news %}
+
     <div class="recent_news_area mt-5 mb-5">
         <div class="container">
             <div class="row justify-content-center">
@@ -102,7 +104,6 @@
                 </div>
             </div>
             <div class="row">
-                {% if news %}
                 {% for new in news %}
                 <div class="col-md-6">
                     <div class="single__news">
@@ -132,12 +133,11 @@
 
 
                 {% endfor %}
-                {% else %}
-                Пока что нет новостей
-                {% endif %}
+
             </div>
         </div>
     </div>
+                {% endif %}
     <!-- recent_news_area_end  -->
 
     <!-- popular_program_area_start  -->
@@ -154,10 +154,18 @@
                 <div class="col-lg-12">
                     <nav class="custom_tabs text-center">
                         <div class="nav" id="nav-tab" role="tablist">
+                            {% if authorities %}
                             <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Начальство</a>
+                            {% endif %}
+                            {% if teachers %}
                             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Учителя </a>
+                            {% endif %}
+                            {% if retireds %}
                             <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Учителя в отставке</a>
+                            {% endif %}
+                            {% if parliaments %}
                             <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact2" role="tab" aria-controls="nav-contact" aria-selected="false">Парламент</a>
+                            {% endif %}
                         </div>
                     </nav>
                 </div>
@@ -165,25 +173,24 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="row">
-                        {% for person in personals %}
+                        {% for person in authorities %}
                         <div class="col-lg-4 col-md-6">
-                           <div class="single__program" style="background: #f2f6fc;">
+                                <div class="single__program" style="background: #f2f6fc;">
                     <div class="program_thumb">
-                        <img src="{{ person.profile_picture.url }}" alt="" style="border-radius: 5px; max-height: 350px; width: auto;" class="img-fluid rounded mx-auto d-block">
+                        <img src="{{ person.person.profile_picture.url }}" alt="" style="border-radius: 5px; width: auto; max-height: 350px" class="img-fluid rounded mx-auto d-block">
                     </div>
                     <div class="program__content p-4">
-                        {% for subject in person.subject_taught.all %}
-                        <span>{{ subject.subject_name }}</span>
-                        {% endfor %}
-                        <h4>{{ person.first_name }} {{ person.last_name }}</h4>
-                        <p>
-                            E-mail: <a href="mailto: {{ person.email }}">{{ person.email }}</a><br>
-                            Тел. номер: <a href="tel: {{ person.phone_number }}">{{ person.phone_number }}</a><br>
-                            Предметы: {% for subject in person.subject_taught.all %}{{ subject.subject_name }}{% endfor %}<br>
-                            Опыт работы: {{ person.work_experience }}<br>
-                            Дата рождение: {{ person.birthday }}<br>
-                            Возраст: {{ person.age }}<br>
-                        </p>
+                        <h4>{{ person.person.first_name }} {{ person.person.last_name }}</h4>
+                        <p class="text-center">Предметы: {% for subject in person.person.subjects_taught.all %} {{ subject.subject_name }} {% endfor %}</p>
+
+<!--                        <p>-->
+<!--                            E-mail: <a href="mailto: {{ person.email }}">{{ person.email }}</a><br>-->
+<!--                            Тел. номер: <a href="tel: {{ person.phone_number }}">{{ person.phone_number }}</a><br>-->
+<!--                            Предметы: {% for subject in person.subject_taught.all %}{{ subject.subject_name }}{% endfor %}<br>-->
+<!--                            Опыт работы: {{ person.work_experience }}<br>-->
+<!--                            Дата рождение: {{ person.birthday }}<br>-->
+<!--                            Возраст: {{ person.age }}<br>-->
+<!--                        </p>-->
                     </div>
                 </div>
                         </div>
@@ -191,123 +198,81 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                <div class="row">
-                            <div class="col-lg-4 col-md-6">
-                                <div class="single__program">
-                                    <div class="program_thumb">
-                                        <img src="/static/img/program/1.png" alt="">
-                                    </div>
-                                    <div class="program__content">
-                                        <span>Должность</span>                                        <h4>ФИО</h4>
-                                        <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
+                        <div class="row">
+                        {% for person in teachers %}
+                        <div class="col-lg-4 col-md-6">
+                                <div class="single__program" style="background: #f2f6fc;">
+                    <div class="program_thumb">
+                        <img src="{{ person.person.profile_picture.url }}" alt="" style="border-radius: 5px; width: auto; max-height: 350px" class="img-fluid rounded mx-auto d-block">
+                    </div>
+                    <div class="program__content p-4">
+                        <h4>{{ person.person.first_name }} {{ person.person.last_name }}</h4>
+                        <p class="text-center">Предметы: {% for subject in person.person.subjects_taught.all %} {{ subject.subject_name }} {% endfor %}</p>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="single__program">
-                                    <div class="program_thumb">
-                                        <img src="/static/img/program/3.png" alt="">
-                                    </div>
-                                    <div class="program__content">
-                                        <span>Должность</span>                                        <h4>ФИО</h4>
-                                        <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="single__program">
-                                    <div class="program_thumb">
-                                        <img src="/static/img/program/2.png" alt="">
-                                    </div>
-                                    <div class="program__content">
-                                        <span>Должность</span>                                        <h4>ФИО</h4>
-                                        <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-
-                                    </div>
-                                </div>
-                            </div>
+<!--                        <p>-->
+<!--                            E-mail: <a href="mailto: {{ person.email }}">{{ person.email }}</a><br>-->
+<!--                            Тел. номер: <a href="tel: {{ person.phone_number }}">{{ person.phone_number }}</a><br>-->
+<!--                            Предметы: {% for subject in person.subject_taught.all %}{{ subject.subject_name }}{% endfor %}<br>-->
+<!--                            Опыт работы: {{ person.work_experience }}<br>-->
+<!--                            Дата рождение: {{ person.birthday }}<br>-->
+<!--                            Возраст: {{ person.age }}<br>-->
+<!--                        </p>-->
+                    </div>
+                </div>
+                        </div>
+                        {% endfor %}
                         </div>
                 </div>
                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                <div class="row">
-                            <div class="col-lg-4 col-md-6">
-                                <div class="single__program">
-                                    <div class="program_thumb">
-                                        <img src="/static/img/program/3.png" alt="">
-                                    </div>
-                                    <div class="program__content">
-                                        <span>Должность</span>                                        <h4>ФИО</h4>
-                                        <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
+                        <div class="row">
+                        {% for person in retireds %}
+                        <div class="col-lg-4 col-md-6">
+                                <div class="single__program" style="background: #f2f6fc;">
+                    <div class="program_thumb">
+                        <img src="{{ person.person.profile_picture.url }}" alt="" style="border-radius: 5px; width: auto; max-height: 350px" class="img-fluid rounded mx-auto d-block">
+                    </div>
+                    <div class="program__content p-4">
+                        <h4>{{ person.person.first_name }} {{ person.person.last_name }}</h4>
+                        <p class="text-center">Предметы: {% for subject in person.person.subjects_taught.all %} {{ subject.subject_name }} {% endfor %}</p>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="single__program">
-                                    <div class="program_thumb">
-                                        <img src="/static/img/program/2.png" alt="">
-                                    </div>
-                                    <div class="program__content">
-                                        <span>Должность</span>                                        <h4>ФИО</h4>
-                                        <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="single__program">
-                                    <div class="program_thumb">
-                                        <img src="/static/img/program/1.png" alt="">
-                                    </div>
-                                    <div class="program__content">
-                                        <span>Должность</span>                                        <h4>ФИО</h4>
-                                        <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-
-                                    </div>
-                                </div>
-                            </div>
+<!--                        <p>-->
+<!--                            E-mail: <a href="mailto: {{ person.email }}">{{ person.email }}</a><br>-->
+<!--                            Тел. номер: <a href="tel: {{ person.phone_number }}">{{ person.phone_number }}</a><br>-->
+<!--                            Предметы: {% for subject in person.subject_taught.all %}{{ subject.subject_name }}{% endfor %}<br>-->
+<!--                            Опыт работы: {{ person.work_experience }}<br>-->
+<!--                            Дата рождение: {{ person.birthday }}<br>-->
+<!--                            Возраст: {{ person.age }}<br>-->
+<!--                        </p>-->
+                    </div>
+                </div>
+                        </div>
+                        {% endfor %}
                         </div>
                 </div>
                 <div class="tab-pane fade" id="nav-contact2" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                <div class="row">
-                            <div class="col-lg-4 col-md-6">
-                                <div class="single__program">
-                                    <div class="program_thumb">
-                                        <img src="/static/img/program/2.png" alt="">
-                                    </div>
-                                    <div class="program__content">
-                                        <span>Должность</span>                                        <h4>ФИО</h4>
-                                        <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
+                        <div class="row">
+                        {% for person in parliaments %}
+                        <div class="col-lg-4 col-md-6">
+                                <div class="single__program" style="background: #f2f6fc;">
+                    <div class="program_thumb">
+                        <img src="{{ person.profile_picture.url }}" alt="" style="border-radius: 5px; width: auto; max-height: 350px" class="img-fluid rounded mx-auto d-block">
+                    </div>
+                    <div class="program__content p-4">
+                        <h4>{{ person.person.first_name }} {{ person.person.last_name }}</h4>
+                        <p class="text-center">Предметы: {% for subject in person.person.subjects_taught.all %} {{ subject.subject_name }} {% endfor %}</p>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="single__program">
-                                    <div class="program_thumb">
-                                        <img src="/static/img/program/1.png" alt="">
-                                    </div>
-                                    <div class="program__content">
-                                        <span>Должность</span>                                        <h4>ФИО</h4>
-                                        <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="single__program">
-                                    <div class="program_thumb">
-                                        <img src="/static/img/program/3.png" alt="">
-                                    </div>
-                                    <div class="program__content">
-                                        <span>Должность</span>                                        <h4>ФИО</h4>
-                                        <p>Для клиента очень важно знать о его потребностях, но в то же время происходит то же самое.</p>
-
-                                    </div>
-                                </div>
-                            </div>
+<!--                        <p>-->
+<!--                            E-mail: <a href="mailto: {{ person.email }}">{{ person.email }}</a><br>-->
+<!--                            Тел. номер: <a href="tel: {{ person.phone_number }}">{{ person.phone_number }}</a><br>-->
+<!--                            Предметы: {% for subject in person.subject_taught.all %}{{ subject.subject_name }}{% endfor %}<br>-->
+<!--                            Опыт работы: {{ person.work_experience }}<br>-->
+<!--                            Дата рождение: {{ person.birthday }}<br>-->
+<!--                            Возраст: {{ person.age }}<br>-->
+<!--                        </p>-->
+                    </div>
+                </div>
+                        </div>
+                        {% endfor %}
                         </div>
                 </div>
             </div>
@@ -321,6 +286,7 @@
             </div>
         </div>
     </div>
+
 
 
     <!-- popular_program_area_end -->

@@ -1,56 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="recent_event_area section__padding">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 col-md-10">
-                <div class="section_title text-center mb-70">
-                    <h3 class="mb-45">Наши Отзывы</h3>
-                    <p>Вы тоже сможете оставить отзыв <a href="{% url 'main:add_feedback' %}">здесь</a>.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="single_event d-flex align-items-center">
-                    <div class="date text-center">
-                        <span>02</span>
-                        <p>Dec, 2020</p>
-                    </div>
-                    <div class="event_info">
-                        <a href="event_details.html">
-                            <h4>Как говорить как носитель языка?</h4>
-                         </a>
-                        <p><span> <i class="flaticon-clock"></i> 10:30 pm</span> <span> <i class="flaticon-calendar"></i> 21Nov 2020 </span> <span> <i class="flaticon-placeholder"></i> AH Oditoriam</span> </p>
-                    </div>
-                </div>
-                <div class="single_event d-flex align-items-center">
-                    <div class="date text-center">
-                        <span>03</span>
-                        <p>Dec, 2020</p>
-                    </div>
-                    <div class="event_info">
-                        <a href="event_details.html">
-                            <h4>Как говорить как носитель языка?</h4>
-                         </a>
-                        <p><span> <i class="flaticon-clock"></i> 10:30 pm</span> <span> <i class="flaticon-calendar"></i> 21Nov 2020 </span> <span> <i class="flaticon-placeholder"></i> AH Oditoriam</span> </p>
-                    </div>
-                </div>
-                <div class="single_event d-flex align-items-center">
-                    <div class="date text-center">
-                        <span>10</span>
-                        <p>Dec, 2020</p>
-                    </div>
-                    <div class="event_info">
-                        <a href="event_details.html">
-                            <h4>Как говорить как носитель языка?</h4>
-                         </a>
-                        <p><span> <i class="flaticon-clock"></i> 10:30 pm</span> <span> <i class="flaticon-calendar"></i> 21Nov 2020 </span> <span> <i class="flaticon-placeholder"></i> AH Oditoriam</span> </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{% if feedbacks %}
+{% for feedback in feedbacks %}
+<section class="sample-text-area">
+		<div class="container box_1170">
+			<h3 class="text-heading">{{ feedback.name }} {{ feedback.surname }}</h3>
+            <p>{{ feedback.email }}</p>
+			<p class="sample-text">
+                {{ feedback.message }}
+			</p>
+		</div>
+	</section>
+{% endfor %}
+{% else %}
+<p>Нет отзывов</p>
+{% endif %}
 {% endblock %}

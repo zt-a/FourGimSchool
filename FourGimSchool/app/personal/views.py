@@ -3,15 +3,21 @@ from .models import *
 
 
 def personal(request):
-    personals = PersonalModel.objects.all()[:3]
+    authorities = Authorities.objects.filter(is_published=True)[:3]
+    teachers = Teachers.objects.filter(is_published=True)[:3]
+    parliament = Parliament.objects.filter(is_published=True)[:3]
+    retired = RetiredTeachers.objects.filter(is_published=True)[:3]
     context = {
-        'personals': personals,
+        'authorities': authorities,
+        'teachers': teachers,
+        'parliaments': parliament,
+        'retireds': retired,
     }
     return render(request, 'personal/personal.html', context)
 
 
 def all_personal(request):
-    personals = PersonalModel.objects.all()
+    personals = PersonalModel.objects.filter(is_published=True)
     context = {
         'personals': personals,
     }
@@ -19,7 +25,7 @@ def all_personal(request):
 
 
 def classes(request):
-    Classes = ClassModel.objects.all()
+    Classes = ClassModel.objects.filter(is_published=True)
     context = {
         'classes': Classes
     }
@@ -27,8 +33,16 @@ def classes(request):
 
 
 def class_detail(request, slug):
-    Class = get_object_or_404(ClassModel, slug=slug)
+    Class = get_object_or_404(ClassModel, slug=slug, is_published=True)
     context = {
         'class': Class,
     }
     return render(request, 'personal/class_detail.html', context=context)
+
+
+def grades_list(request):
+    grades = GradesStudents.objects.filter(is_published=True)
+    context = {
+        'grades': grades,
+    }
+    return render(request, 'personal/grades_list.html', context)

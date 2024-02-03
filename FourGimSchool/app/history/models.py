@@ -9,8 +9,7 @@ class History(models.Model):
     description = models.TextField(verbose_name='Описание', null=True, blank=True)
     content = models.TextField(verbose_name='Контент')
     image = models.ImageField(upload_to='history_images/', verbose_name='Изображение')
-    files = models.ManyToManyField('MediaFiles', related_name='histories', verbose_name='видео или файлы', null=True,
-                                   blank=True)
+    files = models.ManyToManyField('MediaFiles', related_name='histories', verbose_name='видео или файлы')
 
     time_create = models.DateTimeField(verbose_name='Время создание', auto_now_add=True)
     time_update = models.DateTimeField(verbose_name='Время обновление', auto_now=True)

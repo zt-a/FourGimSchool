@@ -95,22 +95,23 @@
                                                         <li><a href="{% url 'personal:all_personal' %}">Учителя</a></li>
                                                         <li><a href="{% url 'personal:classes' %}">Классы</a></li>
                                                         <li><a href="{% url 'archive:documents' %}">Архив документов</a></li>
+                                                        <li><a href="{% url 'personal:grades' %}">Оценки учеников</a></li>
                                                     </ul>
                                                 </li>
                                                 <li><a href="{% url 'news:index' %}">Новости <i class="ti-angle-down"></i></a>
                                                     <ul class="submenu">
                                                         <li><a href="{% url 'news:index' %}">Новости</a>
                                                         <li><a href="{% url 'event:event_list' %}">Событие</a></li>
-                                                        <li><a href="#">Блог</a></li>
-                                                        <li><a href="#">Форум</a></li>
+                                                        <li><a href="{% url 'blog:post_list' %}">Блог</a></li>
+                                                        <li><a href="{% url 'forum:post_list' %}">Форум</a></li>
                                                     </ul>
                                                 </li>
-                                                <li><a href="#">Достижение <i class="ti-angle-down"></i></a>
+                                                <li><a href="{% url 'achievement:achievement' %}">Достижение <i class="ti-angle-down"></i></a>
                                                     <ul class="submenu">
-                                                        <li><a href="#">Лучшие ученики</a></li>
-                                                        <li><a href="#">Достижение учеников</a></li>
-                                                        <li><a href="#">Достижение учителей</a></li>
-                                                        <li><a href="#">Соревновательные достижение</a></li>
+                                                        <li><a href="{% url 'achievement:best_students' %}">Лучшие ученики</a></li>
+                                                        <li><a href="{% url 'achievement:achievement_students' %}">Достижение учеников</a></li>
+                                                        <li><a href="{% url 'achievement:achievement_personal' %}">Достижение учителей</a></li>
+                                                        <li><a href="{% url 'achievement:competitive_achievement' %}">Соревновательные достижение</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -118,7 +119,7 @@
                                     </div>
                                     <div class="Appointment">
                                         <div class="book_btn d-none d-lg-block">
-                                            <a href="{% url 'main:add_feedback' %}">Оставить Отзыв</a>
+                                            {% block main_btn %}<a href="{% url 'main:add_feedback' %}">Оставить Отзыв</a>{% endblock %}
                                         </div>
                                     </div>
                                 </div>
@@ -192,56 +193,58 @@
                     <div class="col-xl-3 col-md-6 col-lg-3">
                         <div class="footer_widget">
                             <h3 class="footer_title">
-                                О Нас
+                                Главная
                             </h3>
                             <ul>
-                                <li><a href="#">Онлайн обучение</a></li>
+                                <li><a  href="{% url 'main:index' %}">Главная </a>
+                                <li><a href="{% url 'main:rules' %}">Правило Школы</a></li>
+<!--                                                        <li><a href="#">Электронные Книги</a></li>-->
+                                <li><a href="{% url 'main:feedback' %}">Отзывы Пользователей</a></li>
+                                <li><a href="{% url 'main:contact' %}">Контакты</a></li>
                                 <li><a href="{% url 'main:about' %}">О Нас</a></li>
-                                <li><a href="#">Карьера</a></li>
-                                <li><a href="#">Пресс-центр</a></li>
-                                <li><a href="#">Стать инструктором</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6 col-lg-3">
                         <div class="footer_widget">
                             <h3 class="footer_title">
-                                Кампус
+                                Персонал
                             </h3>
                             <ul>
-                                <li><a href="#">Наши планы</a></li>
-                                <li><a href="#">Бесплатная пробная версия</a></li>
-                                <li><a href="#">Академические решения</a></li>
-                                <li><a href="#">Бизнес решения</a></li>
-                                <li><a href="#">Государственные решения</a></li>
+                                <li><a href="{% url 'personal:personal' %}">Персонал</a>
+                                {% if user.is_staff or user.is_superuser %}
+                                <li><a href="/admin/">Администрация</a></li>
+                                {% endif %}
+                                <li><a href="{% url 'personal:all_personal' %}">Учителя</a></li>
+                                <li><a href="{% url 'personal:classes' %}">Классы</a></li>
+                                <li><a href="{% url 'archive:documents' %}">Архив документов</a></li>
+                                <li><a href="{% url 'personal:grades' %}">Оценки учеников</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6 col-lg-3">
                         <div class="footer_widget">
                             <h3 class="footer_title">
-                                Изучать
+                                Новости
                             </h3>
                             <ul>
-                                <li><a href="#">Политика приема</a></li>
-                                <li><a href="#">Начиная</a></li>
-                                <li><a href="#">Информация о визе</a></li>
-                                <li><a href="#">Калькулятор стоимости обучения</a></li>
-                                <li><a href="#">Запрашивать информацию</a></li>
+                                <li><a href="{% url 'news:index' %}">Новости</a>
+                                <li><a href="{% url 'event:event_list' %}">Событие</a></li>
+                                <li><a href="{% url 'blog:post_list' %}">Блог</a></li>
+                                <li><a href="{% url 'forum:post_list' %}">Форум</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6 col-lg-3">
                         <div class="footer_widget">
                             <h3 class="footer_title">
-                                Поддерживать
+                                Достижение
                             </h3>
                             <ul>
-                                <li><a href="#">Поддерживать</a></li>
-                                <li><a href="#">Связаться с нами</a></li>
-                                <li><a href="#">Системные Требования</a></li>
-                                <li><a href="{% url 'main:feedback' %}">Оставить отзыв</a></li>
-                                <li><a href="mailto: zt20061113@gmail.com">Обратная связь с сайтом</a></li>
+                                <li><a href="{% url 'achievement:best_students' %}">Лучшие ученики</a></li>
+                                <li><a href="{% url 'achievement:achievement_students' %}">Достижение учеников</a></li>
+                                <li><a href="{% url 'achievement:achievement_personal' %}">Достижение учителей</a></li>
+                                <li><a href="{% url 'achievement:competitive_achievement' %}">Соревновательные достижение</a></li>
                             </ul>
                         </div>
                     </div>

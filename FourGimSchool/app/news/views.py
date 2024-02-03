@@ -16,7 +16,7 @@ class NewsListView(ListView):
     paginate_by = 10  # Количество новостей на одной странице
 
     def get_queryset(self):
-        queryset = News.objects.all()
+        queryset = News.objects.filter(is_published=True)
         filter = NewsFilter(self.request.GET, queryset=queryset)
         return filter.qs
 
@@ -36,8 +36,6 @@ class NewsListView(ListView):
             # Если номер страницы больше максимального, возвращаем последнюю страницу
             news = paginator.page(paginator.num_pages)
 
-
-
         context['news_list'] = news
         context['filter'] = NewsFilter(self.request.GET, queryset=self.get_queryset())
         context['latest_news'] = News.objects.filter(is_published=True).order_by('-time_create')[:5]
@@ -49,10 +47,11 @@ class NewsDetailView(DetailView):
     template_name = 'news/news_detail.html'
     slug_field = 'slug'
     pk_url_kwarg = 'pk'
+
     # context_object_name = 'detail_post'
 
     def get_queryset(self):
-        queryset = News.objects.all()
+        queryset = News.objects.filter(is_published=True)
         filter = NewsFilter(self.request.GET, queryset=queryset)
         return filter.qs
 
@@ -94,6 +93,6 @@ def add_comment(request, slug):
     context = {
         'form': form,
         'news': news,
-   }
+    }
 
     return render(request, 'news/add_comment.html', context=context)

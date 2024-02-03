@@ -20,7 +20,7 @@ class DocumentListView(ListView):
 
 class DownloadDocumentView(View):
     def get(self, request, document_id):
-        document = get_object_or_404(Document, pk=document_id)
+        document = get_object_or_404(Document, pk=document_id, is_published=True)
 
         response = HttpResponse(document.pdf_file, content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="{document.title}.pdf"'

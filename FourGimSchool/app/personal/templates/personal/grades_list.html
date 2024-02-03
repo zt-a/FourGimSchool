@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if grades %}
+<div class="container box-1170 mt-5 mb-5">
+  <h2>Оценки за четверть</h2>
+    <table class="table table-hover">
+  <thead>
+    <tr>
+        <th scope="col">Ученик</th>
+        <th scope="col">Предмет</th>
+        <th scope="col">Оценка</th>
+        <th scope="col">Четверть</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for person in grades %}
+        <tr>
+          <td>{{ person.student }}</td>
+            <td>{{ person.subject }}</td>
+            <td>{{ person.grade }}</td>
+            <td>{{ person.quarter }}</td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% else %}
+<p>Пока что оценки за четверть не опубликованы</p>
+{% endif %}
+{% endblock %}

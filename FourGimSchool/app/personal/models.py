@@ -20,6 +20,7 @@ class SubjectModel(models.Model):
 class PersonalModel(models.Model):
     first_name = models.CharField(max_length=255, verbose_name='Имя')
     last_name = models.CharField(max_length=255, verbose_name='Фамилия')
+    patronymic = models.CharField(max_length=100, blank=True, null=True, verbose_name="Отчество")
     email = models.EmailField(unique=True, verbose_name='Email')
     subjects_taught = models.ManyToManyField(SubjectModel, verbose_name='Преподаваемые предметы или должность')
     address = models.TextField(verbose_name='Адрес')
@@ -152,9 +153,105 @@ class StudentModel(models.Model):
     is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
 
     def __str__(self):
-        return f"Паспорт {self.first_name} {self.last_name} {self.patronymic}"
+        return f"{self.first_name} {self.last_name} {self.patronymic}"
 
     class Meta:
         verbose_name = 'Ученик'
         verbose_name_plural = 'Ученики'
         ordering = ['id', 'date_of_birth']
+
+
+class GradesStudents(models.Model):
+    student = models.ForeignKey(StudentModel, on_delete=models.CASCADE, verbose_name='Ученик',
+                                related_name='StudentGrade')
+    grade_choices = [
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+    ]
+    grade = models.IntegerField(choices=grade_choices, verbose_name='Оценка ученика')
+
+    quarter_choices = [
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+    ]
+    quarter = models.IntegerField(choices=quarter_choices, verbose_name='Четверть')
+    subject = models.ForeignKey(SubjectModel, on_delete=models.SET_NULL, related_name='SubjectGrade',
+                                verbose_name='Предмет', null=True)
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    time_update = models.DateTimeField(auto_now=True, verbose_name='Дата последнего обновления')
+    is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
+
+    def __str__(self):
+        return self.student.__str__()
+
+    class Meta:
+        verbose_name = 'Оценка'
+        verbose_name_plural = 'Оценки'
+        ordering = ['quarter', 'grade', 'subject', 'id', '-time_create']
+
+
+class Authorities(models.Model):
+    person = models.ForeignKey(PersonalModel, on_delete=models.CASCADE, related_name='authorities_person')
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    time_update = models.DateTimeField(auto_now=True, verbose_name='Дата последнего обновления')
+    is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
+    def __str__(self):
+        return self.person.__str__()
+
+    class Meta:
+        verbose_name = 'Начальство'
+        verbose_name_plural = 'Начальство'
+        ordering = ['id']
+
+
+class Teachers(models.Model):
+    person = models.ForeignKey(PersonalModel, on_delete=models.CASCADE, related_name='teachers_person')
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    time_update = models.DateTimeField(auto_now=True, verbose_name='Дата последнего обновления')
+    is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
+    def __str__(self):
+        return self.person.__str__()
+
+    class Meta:
+        verbose_name = 'Учителя '
+        verbose_name_plural = 'Учителя'
+        ordering = ['id']
+
+
+class Parliament(models.Model):
+    person = models.ForeignKey(StudentModel, on_delete=models.CASCADE, related_name='parliaments_person')
+
+    profile_picture = models.ImageField(upload_to='parliaments_person_pictures/', verbose_name='Фото профиля')
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    time_update = models.DateTimeField(auto_now=True, verbose_name='Дата последнего обновления')
+    is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
+    def __str__(self):
+        return self.person.__str__()
+
+    class Meta:
+        verbose_name = 'Парламент '
+        verbose_name_plural = 'Парламенты'
+        ordering = ['id']
+
+
+class RetiredTeachers(models.Model):
+    person = models.ForeignKey(PersonalModel, on_delete=models.CASCADE, related_name='RetiredTeachers_person')
+
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    time_update = models.DateTimeField(auto_now=True, verbose_name='Дата последнего обновления')
+    is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
+    def __str__(self):
+        return self.person.__str__()
+
+    class Meta:
+        verbose_name = 'Учителя в отставке '
+        verbose_name_plural = 'Учителя в отставке'
+        ordering = ['id']

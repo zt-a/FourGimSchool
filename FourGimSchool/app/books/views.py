@@ -15,7 +15,7 @@ class BookListView(ListView):
 
 class DownloadBookView(View):
     def get(self, request, slug):
-        book = get_object_or_404(Book, slug=slug)
+        book = get_object_or_404(Book, slug=slug, is_published=True)
 
         response = HttpResponse(book.pdf_book, content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="{book.book_name}.pdf"'

@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.db.models import Q
 from .models import *
 from news.models import News
-from personal.models import PersonalModel
+from personal.models import *
 
 # def search(request):
 #     query = request.GET.get('q', '')
@@ -38,9 +38,15 @@ from personal.models import PersonalModel
 
 def index(request):
     feedback_form = FeedbackForm()
-    rules = RulesModel.objects.all()[:3]
-    news = News.objects.all()[:2]
-    personals = PersonalModel.objects.all()[:3]
+    rules = RulesModel.objects.filter(is_published=True)[:3]
+    news = News.objects.filter(is_published=True)[:2]
+    authorities = Authorities.objects.filter(is_published=True)[:3]
+    teachers = Teachers.objects.filter(is_published=True)[:3]
+    parliament = Parliament.objects.filter(is_published=True)[:3]
+    retired = RetiredTeachers.objects.filter(is_published=True)[:3]
+    context = {
+
+    }
 
     if feedback_form.is_valid():
         feedback_form.save()
@@ -52,7 +58,10 @@ def index(request):
         'search_form': search_form,
         'rules': rules,
         'news': news,
-        'personals': personals,
+        'authorities': authorities,
+        'teachers': teachers,
+        'parliaments': parliament,
+        'retireds': retired,
     }
     return render(request, 'main/index.html', context)
 
@@ -78,7 +87,7 @@ def about(request):
 
 
 def rules(request):
-    rules = RulesModel.objects.all()
+    rules = RulesModel.objects.filter(is_published=True)
     context = {
         'rules': rules
     }
@@ -86,7 +95,7 @@ def rules(request):
 
 
 def detail_rules(request, slug):
-    rule = get_object_or_404(RulesModel, slug=slug)
+    rule = get_object_or_404(RulesModel, slug=slug, is_published=True)
     context = {
         'rule': rule
     }

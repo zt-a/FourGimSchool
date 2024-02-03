@@ -10,7 +10,7 @@ class HistoryListView(View):
 
     def get(self, request):
         # Получение всех объектов History из базы данных
-        histories = History.objects.all()
+        histories = History.objects.filter(is_published=True)
 
         # Передача списка историй в шаблон для отображения
         return render(request, self.template_name, {'histories': histories})
@@ -20,5 +20,5 @@ class HistoryDetailView(View):
     template_name = 'history/detail_history.html'
 
     def get(self, request, history_id):
-        history = History.objects.get(id=history_id)
+        history = History.objects.get(id=history_id, is_published=True)
         return render(request, self.template_name, {'history': history})

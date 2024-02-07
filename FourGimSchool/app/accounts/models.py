@@ -8,7 +8,7 @@ class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=15, null=True, blank=True, verbose_name='Номер телефона')
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True,
                                       verbose_name='Изображение профиля')
-    email = models.EmailField(null=True, blank=True, verbose_name='Email')
+    email = models.EmailField(unique=True, verbose_name='Email')
     birthdate = models.DateField(null=True, blank=True, verbose_name='Дата рождения')
 
     def __str__(self):

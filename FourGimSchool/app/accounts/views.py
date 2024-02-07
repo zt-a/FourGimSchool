@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login, logout
 from .models import CustomUser
 from .forms import CustomUserRegistrationForm, UserPasswordChangeForm, CustomUserChangeForm
@@ -61,3 +61,22 @@ class AccountEditView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class AccountDeleteView(DeleteView):
+    template_name = 'accounts/account_delete.html'
+    success_url = reverse_lazy('accounts:login')  # Замените 'home' на URL вашей домашней страницы
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def delete(self, request, *args, **kwargs):
+        # Дополнительные действия перед удалением аккаунта, если необходимо
+        # Например, разлогиньте пользователя перед удалением
+
+        response = super().delete(request, *args, **kwargs)
+
+        # Дополнительные действия после удаления аккаунта, если необходимо
+        # Например, отправьте уведомление об удалении
+
+        return response

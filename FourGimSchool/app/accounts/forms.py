@@ -285,9 +285,9 @@ class CustomUserChangeForm(UserChangeForm):
     birthdate = forms.DateField(
         widget=DateInput(attrs={
             'class': 'single-input',
-            'placeholder': 'Введите вашу дату рождения (гггг-мм-дд)',
+            'placeholder': 'Введите вашу дату рождения (дд.мм.гггг)',
             'onfocus': 'this.placeholder = ""',
-            'onblur': 'this.placeholder = "Дата рождения"'
+            'onblur': 'this.placeholder = "Введите вашу дату рождения (дд.мм.гггг)"'
         }),
         label='Дата рождения'
     )

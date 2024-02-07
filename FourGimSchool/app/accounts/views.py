@@ -1,13 +1,14 @@
+from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth import login, logout
 from .models import CustomUser
-from .forms import CustomUserRegistrationForm
+from .forms import CustomUserRegistrationForm, UserPasswordChangeForm, CustomUserChangeForm
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordChangeView
 from .forms import CustomUserAuthenticationForm
 
 
@@ -45,3 +46,18 @@ def profile(request):
         redirect('accounts:login')
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     return render(request, 'accounts/profile.html', {'user_profile': user_profile})
+
+
+class UserPasswordChange(PasswordChangeView):
+    form_class = UserPasswordChangeForm
+    success_url = reverse_lazy("accounts:password_change_done")
+    template_name = "accounts/password_change_form.html"
+
+
+class AccountEditView(UpdateView):
+    template_name = 'accounts/profile_change_form.html'
+    form_class = CustomUserChangeForm
+    success_url = reverse_lazy('accounts:profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user

@@ -1,13 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container box-1170">
+<div class="container box-1170 mt-5">
     <h2>Профиль пользователя {{ user_profile.user.username }}</h2>
-  <p>Биография: {{ user_profile.bio }}</p>
-  {% if user_profile.user.profile_image %}
-    <img src="{{ user_profile.user.profile_image.url }}" alt="" height="300px" style="border-radius: 20px">
-  {% else %}
-    <p>Изображение профиля отсутствует.</p>
-  {% endif %}
+
+                <div class="row">
+					<div class="col-md-3">
+                        {% if user_profile.user.profile_image %}
+                        <img src="{{ user_profile.user.profile_image.url }}" alt="" height="250px" style="border-radius: 20px; max-width: 300px; margin-bottom: 10px;">
+                        {% else %}
+                        <p>Изображение профиля отсутствует.</p>
+                        {% endif %}
+					</div>
+					<div class="col-md-9 mt-sm-20">
+						<p>
+                          Имя: {{ user_profile.user.first_name }}<br>
+                          Фамилия: {{ user_profile.user.last_name }}<br>
+                          Почта: {{ user_profile.user.email }} <br>
+                        </p>
+                      <p><a href="{% url 'accounts:password_change' %}" class="genric-btn warning large">Сменить пароль</a></p>
+                      <p><a href="{% url 'accounts:profile_change' %}" class="genric-btn primary large">Редактировать профиль</a></p>
+                      <p><a href="{% url 'accounts:logout' %}" class="genric-btn danger large">Выйти из аккаунта</a></p>
+					</div>
+				</div>
 </div>
+
 {% endblock %}

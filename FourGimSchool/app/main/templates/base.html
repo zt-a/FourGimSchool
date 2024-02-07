@@ -29,6 +29,12 @@
     <link rel="stylesheet" href="{% static 'css/gallery/style_gallery.css' %}">
     <title>{{ title }} - Страница</title>
     {% block css %}{% endblock %}
+
+    <style>
+        .form-error {
+            color: #eb6157;
+        }
+    </style>
 </head>
 
 <body>
@@ -146,13 +152,13 @@
                         <div class="col-md-7">
                             <div class="footer_widget">
                                 <h3 class="footer_title">
-                                    Поиск на сайте
+                                    Баткенская школа гимназии номер 4
                                 </h3>
-                                <form action="#" class="newsletter_form">
-                                    {{ search_form.query }}
-<!--                                    <input type="text" placeholder="Email Address">-->
-                                    <button type="submit">Поискать сейчас</button>
-                                </form>
+<!--                                <form action="#" class="newsletter_form">-->
+<!--                                    {{ search_form.query }}-->
+<!--&lt;!&ndash;                                    <input type="text" placeholder="Email Address">&ndash;&gt;-->
+<!--                                    <button type="submit">Поискать сейчас</button>-->
+<!--                                </form>-->
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-5">

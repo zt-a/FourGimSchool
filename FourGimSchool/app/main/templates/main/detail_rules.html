@@ -11,24 +11,28 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="single_event d-flex align-items-center">
-                    <div class="date text-center">
-                        <span>{{ rule.number_rule }}</span>
-                        <p>ПРАВИЛО</p>
-                    </div>
-                    <div class="event_info">
-                        <a href="{{ rule.get_absolute_url }}">
-                            <h4>{{ rule.title }}</h4>
-                         </a>
-                        <p><span><i class="flaticon-clock"></i> {{ rule.time_create|time:"g:i A" }}</span> <span><i class="flaticon-calendar"></i> {{ rule.time_create|date:"jM Y" }}</span> <span><i class="flaticon-placeholder"></i> Школа номер - 4</span></p>
-<!--                        <p><span> <i class="flaticon-clock"></i> 10:30 pm</span> <span> <i class="flaticon-calendar"></i> 21Nov 2020 </span> <span> <i class="flaticon-placeholder"></i> AH Oditoriam</span> </p>-->
-                    </div>
-                </div>
-
-            </div>
-        </div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+              {% if prev_rule.slug %}
+              <li class="page-item">
+                  <a class="page-link" href="{% url 'main:detail_rules' slug=prev_rule.slug %}">Previous</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+              </li>
+              {% endif %}
+              {% if next_rule.slug %}
+              <li class="page-item">
+                  <a class="page-link" href="{% url 'main:detail_rules' slug=next_rule.slug %}">Next</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+              </li>
+              {% endif %}
+          </ul>
+        </nav>
     </div>
 </div>
 {% endblock %}

@@ -56,9 +56,6 @@ class RulesModel(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(f"{self.number_rule} {self.title}")
         super().save(*args, **kwargs)
-    #
-    # def get_absolute_url(self):
-    #     return reverse('main:detail_rules', args=[str(self.slug)])
 
     def get_absolute_url(self):
         return reverse('main:detail_rules', kwargs={'slug': self.slug})

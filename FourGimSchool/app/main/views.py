@@ -7,6 +7,7 @@ from .models import *
 from news.models import News
 from personal.models import *
 
+
 # def search(request):
 #     query = request.GET.get('q', '')
 #
@@ -33,7 +34,6 @@ from personal.models import *
 #     }
 #
 #     return render(request, 'main/search_results.html', context)
-
 
 
 def index(request):
@@ -97,9 +97,14 @@ def rules(request):
 
 def detail_rules(request, slug):
     rule = get_object_or_404(RulesModel, slug=slug, is_published=True)
+    prev_rule = RulesModel.objects.filter(number_rule=rule.number_rule - 1).first()
+    next_rule = RulesModel.objects.filter(number_rule=rule.number_rule + 1).first()
+
     context = {
         'title': f'Правило №{rule.pk}',
-        'rule': rule
+        'rule': rule,
+        'next_rule': next_rule,
+        'prev_rule': prev_rule,
     }
     return render(request, 'main/detail_rules.html', context)
 

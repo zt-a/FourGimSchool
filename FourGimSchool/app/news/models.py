@@ -1,10 +1,15 @@
+from django.core.mail import send_mail
 from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from autoslug import AutoSlugField
 from django.conf import settings
+
+from contact_news.models import Contact
 
 
 # Create your models here.
@@ -43,6 +48,26 @@ class News(models.Model):
         verbose_name_plural = 'Новости'
         ordering = ['-time_create', 'id']
         unique_together = ('slug', 'author')
+
+
+@receiver(post_save, sender=News)
+def send_newsletter_on_new_news(sender, instance, created, **kwargs):
+    global url
+    if settings.DEBUG:
+        url = '127.0.0.1:8000' + reverse('news:news_detail', args=[str(instance.slug)])
+    else:
+        settings.MAIN_HOSTS + reverse('news:news_detail', args=[str(instance.slug)])
+    if created:  # Отправлять рассылку только при создании новой новости, а не при обновлении
+        subject = 'Новая новость: {}'.format(instance.title)
+        message = 'У нас есть новая новость! "{}" \n\n{}\n\n{}'.format(
+            instance.title,
+            instance.content,
+            url
+        )
+        from_email = settings.DEFAULT_FROM_EMAIL
+        recipient_list = list(Contact.objects.values_list('email', flat=True))
+
+        send_mail(subject, message, from_email, recipient_list)
 
 
 

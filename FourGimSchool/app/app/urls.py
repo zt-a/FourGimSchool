@@ -33,7 +33,8 @@ urlpatterns = [
     path('events/', include('event.urls', namespace='event')),
     path('blogs/', include('blog.urls', namespace='blog')),
     path('forum/', include('forum.urls', namespace='forum')),
-    path('achievement/', include('achievement.urls', namespace='achievement'))
+    path('achievement/', include('achievement.urls', namespace='achievement')),
+    path('contact_news/', include('contact_news.urls', namespace='contact_news')),
 ]
 
 if settings.DEBUG:

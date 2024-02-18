@@ -1,0 +1,13 @@
+<h3 class="footer_title">
+    Новостная рассылка
+</h3>
+<form action="{% url 'contact_news:contact_email' %}" class="newsletter_form" method="post">
+    {% csrf_token %}
+    {{ contact_form }}
+    {% if layout %}
+    <br>
+    <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Подписаться</button>
+    {% else %}
+    <button type="submit">Подписаться</button>
+    {% endif %}
+</form>

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load contact_tags %}
 
 {% block main_btn %}
 <a href="{% url 'blog:add_post' %}">Добавить пост</a>
@@ -233,35 +233,6 @@
                             {% endfor %}
                         </aside>
 
-                  <aside class="single_sidebar_widget tag_cloud_widget">
-                     <h4 class="widget_title">Tag Clouds</h4>
-                     <ul class="list">
-                        <li>
-                           <a href="#">project</a>
-                        </li>
-                        <li>
-                           <a href="#">love</a>
-                        </li>
-                        <li>
-                           <a href="#">technology</a>
-                        </li>
-                        <li>
-                           <a href="#">travel</a>
-                        </li>
-                        <li>
-                           <a href="#">restaurant</a>
-                        </li>
-                        <li>
-                           <a href="#">life style</a>
-                        </li>
-                        <li>
-                           <a href="#">design</a>
-                        </li>
-                        <li>
-                           <a href="#">illustration</a>
-                        </li>
-                     </ul>
-                  </aside>
                   <aside class="single_sidebar_widget instagram_feeds">
                      <h4 class="widget_title">Instagram Feeds</h4>
                      <ul class="instagram_row flex-wrap">
@@ -302,11 +273,9 @@
 
                     <form action="#">
                         <div class="form-group">
-                            <input type="email" class="form-control" onfocus="this.placeholder = ''"
-                                onblur="this.placeholder = 'Введите email'" placeholder='Введите email' required>
+                            {% contact_form layout=True %}
+
                         </div>
-                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                            type="submit">Подписаться</button>
                     </form>
                 </aside>
                </div>

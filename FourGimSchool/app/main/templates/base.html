@@ -1,5 +1,6 @@
 <!doctype html>
 {% load static %}
+{% load contact_tags %}
 <html class="no-js" lang="zxx">
 
 <head>
@@ -150,14 +151,7 @@
                     <div class="row justify-content-between">
                         <div class="col-md-7">
                             <div class="footer_widget">
-                                <h3 class="footer_title">
-                                    Новостная рассылка
-                                </h3>
-                                <form action="#" class="newsletter_form" method="post">
-                                    {% csrf_token %}
-                                    <input type="email" name="email" id="email" placeholder="Введите ваш email" required>
-                                    <button type="submit">Подписаться</button>
-                                </form>
+                                {% contact_form %}
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-5">

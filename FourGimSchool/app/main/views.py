@@ -53,7 +53,7 @@ def index(request):
     search_form = SearchForm()
 
     context = {
-        'title': 'Отзыв',
+        'title': 'Школа №4 Баткен',
         'feedback_form': feedback_form,
         'search_form': search_form,
         'rules': rules,
@@ -83,12 +83,13 @@ def contact(request):
 
 
 def about(request):
-    return render(request, 'main/about.html')
+    return render(request, 'main/about.html', {'title': 'О нас'})
 
 
 def rules(request):
     rules = RulesModel.objects.filter(is_published=True)
     context = {
+        'title': 'Правило',
         'rules': rules
     }
     return render(request, 'main/rules.html', context)
@@ -97,6 +98,7 @@ def rules(request):
 def detail_rules(request, slug):
     rule = get_object_or_404(RulesModel, slug=slug, is_published=True)
     context = {
+        'title': f'Правило №{rule.pk}',
         'rule': rule
     }
     return render(request, 'main/detail_rules.html', context)
@@ -112,10 +114,10 @@ def add_feedback(request):
         # Если запрос не метода POST, создаем пустую форму
         form = FeedbackForm()
 
-    return render(request, 'main/add_feedback.html', {'form': form})
+    return render(request, 'main/add_feedback.html', {'form': form, 'title': 'Оставить отзыв'})
 
 
 def feedback_list(request):
     feedbacks = FeedbackModel.objects.filter(is_published=True).order_by('-time_create')
 
-    return render(request, 'main/feedback_list.html', {'feedbacks': feedbacks})
+    return render(request, 'main/feedback_list.html', {'feedbacks': feedbacks, 'title': 'Отзыв'})

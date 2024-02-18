@@ -38,6 +38,7 @@ class PostListView(ListView):
             posts = paginator.page(paginator.num_pages)
 
         context['post_list'] = posts
+        context['title'] = 'Блог'
         context['filter'] = PostFilter(self.request.GET, queryset=self.get_queryset())
         context['latest_post'] = Post.objects.filter(is_published=True).order_by('-time_create')[:5]
         return context
@@ -62,7 +63,7 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = CommentForm()
         context['latest_comments'] = Comment.objects.filter(post=self.object, is_published=True).order_by('-time_create')[:50]
-
+        context['title'] = f'{self.get_object().title}'
         context['filter'] = PostFilter(self.request.GET, queryset=self.get_queryset())
         context['latest_post'] = Post.objects.filter(is_published=True).order_by('-time_create')[:5]
 

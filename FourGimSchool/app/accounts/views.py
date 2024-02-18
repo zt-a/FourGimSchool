@@ -27,11 +27,21 @@ class CustomUserRegistrationView(CreateView):
         print(form.errors)
         return super().form_invalid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Регистрация'
+        return context
+
 
 class CustomUserLoginView(LoginView):
     form_class = CustomUserAuthenticationForm
     template_name = 'accounts/login.html'
     success_url = reverse_lazy('main:index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Авторизация'
+        return context
 
 
 def custom_logout(request):
@@ -45,13 +55,18 @@ def profile(request):
     if not request.user.is_authenticated:
         redirect('accounts:login')
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-    return render(request, 'accounts/profile.html', {'user_profile': user_profile})
+    return render(request, 'accounts/profile.html', {'user_profile': user_profile, 'title': 'Профиль'})
 
 
 class UserPasswordChange(PasswordChangeView):
     form_class = UserPasswordChangeForm
     success_url = reverse_lazy("accounts:password_change_done")
     template_name = "accounts/password_change_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Изменение пароля'
+        return context
 
 
 class AccountEditView(UpdateView):
@@ -62,21 +77,24 @@ class AccountEditView(UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Редактирование профиля'
+        return context
+
 
 class AccountDeleteView(DeleteView):
     template_name = 'accounts/account_delete.html'
-    success_url = reverse_lazy('accounts:login')  # Замените 'home' на URL вашей домашней страницы
+    success_url = reverse_lazy('accounts:login')
 
     def get_object(self, queryset=None):
         return self.request.user
 
     def delete(self, request, *args, **kwargs):
-        # Дополнительные действия перед удалением аккаунта, если необходимо
-        # Например, разлогиньте пользователя перед удалением
-
         response = super().delete(request, *args, **kwargs)
-
-        # Дополнительные действия после удаления аккаунта, если необходимо
-        # Например, отправьте уведомление об удалении
-
         return response
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Удаление аккаунта'
+        return context

@@ -45,6 +45,8 @@ class News(models.Model):
         unique_together = ('slug', 'author')
 
 
+
+
 class Like(models.Model):
     news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='likes_set', verbose_name="Новость")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
@@ -60,7 +62,8 @@ class Like(models.Model):
 
 class Comment(models.Model):
     news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='comments', verbose_name="Новость")
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Автор комментария", related_name='news_comments')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Автор комментария",
+                               related_name='news_comments')
     content = models.TextField(verbose_name="Текст комментария")
     time_create = models.DateTimeField(verbose_name='Время создание', auto_now_add=True)
     time_update = models.DateTimeField(verbose_name='Время обновление', auto_now=True)

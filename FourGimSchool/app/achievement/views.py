@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 from .models import BestStudents, AchievementStudents, AchievementPersonal, CompetitiveAchievement
 
@@ -9,6 +10,7 @@ def achievement(request):
     achievements = CompetitiveAchievement.objects.filter(is_published=True)[:9]
 
     context = {
+        'title': 'Достижении',
         'best_students': students,
         'achievements_students': achievements_students,
         'achievements_personal': achievements_personal,
@@ -19,19 +21,31 @@ def achievement(request):
 
 def best_students(request):
     students = BestStudents.objects.filter(is_published=True)
-    return render(request, 'achievement/best_students.html', {'best_students': students})
+    return render(request, 'achievement/best_students.html', {'best_students': students, 'title': 'Лучшие ученики',})
 
 
 def achievement_students(request):
     achievements = AchievementStudents.objects.filter(is_published=True)
-    return render(request, 'achievement/achievement_students.html', {'achievements_students': achievements})
+    context = {
+        'achievements_students': achievements,
+        'title': 'Достижении учеников',
+    }
+    return render(request, 'achievement/achievement_students.html', context)
 
 
 def achievement_personal(request):
     achievements = AchievementPersonal.objects.filter(is_published=True)
-    return render(request, 'achievement/achievement_personal.html', {'achievements_personal': achievements})
+    context = {
+        'achievements_personal': achievements,
+        'title': 'Достижении учителей',
+    }
+    return render(request, 'achievement/achievement_personal.html', context)
 
 
 def competitive_achievement(request):
     achievements = CompetitiveAchievement.objects.filter(is_published=True)
-    return render(request, 'achievement/competitive_achievement.html', {'achievements': achievements})
+    context = {
+        'achievements': achievements,
+        'title': 'Соревновательные достижении'
+    }
+    return render(request, 'achievement/competitive_achievement.html', context)

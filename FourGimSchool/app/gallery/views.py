@@ -14,6 +14,7 @@ class GalleryListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = GalleryForm()  # Замените на имя вашей формы
+        context['title'] = f'Галерея'
         return context
 
     def get_queryset(self):

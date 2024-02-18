@@ -8,3 +8,4 @@ urlpatterns = [
     path('<slug:slug>/', NewsDetailView.as_view(), name='news_detail'),
     path('<slug:slug>/add_comment/', add_comment, name='add_comment'),
 ]
+

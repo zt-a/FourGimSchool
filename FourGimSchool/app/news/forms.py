@@ -2,6 +2,7 @@ from django import forms
 from .models import *
 
 
+
 class CommentForm(forms.ModelForm):
     content = forms.CharField(label='Введите сообщение', widget=forms.Textarea(attrs={
         'class': 'form-control w100',

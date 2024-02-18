@@ -1,11 +1,8 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from .models import News
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import News, Comment
 from .forms import CommentForm
-from accounts.models import CustomUser
 from .filters import NewsFilter
 
 
@@ -37,6 +34,7 @@ class NewsListView(ListView):
             news = paginator.page(paginator.num_pages)
 
         context['news_list'] = news
+        context['title'] = 'Новости'
         context['filter'] = NewsFilter(self.request.GET, queryset=self.get_queryset())
         context['latest_news'] = News.objects.filter(is_published=True).order_by('-time_create')[:5]
         return context
@@ -73,6 +71,7 @@ class NewsDetailView(DetailView):
             time_create__gt=self.object.time_create, is_published=True
         ).order_by('time_create').first()
 
+        context['title'] = f'{self.model.title}'
         return context
 
 
@@ -91,8 +90,11 @@ def add_comment(request, slug):
         form = CommentForm()
 
     context = {
+        'title': 'Оставить комментарий',
         'form': form,
         'news': news,
     }
 
     return render(request, 'news/add_comment.html', context=context)
+
+

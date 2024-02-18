@@ -5,7 +5,6 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Education</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -27,7 +26,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- <link rel="stylesheet" href="{% static 'css/responsive.css' %}"> -->
     <link rel="stylesheet" href="{% static 'css/gallery/style_gallery.css' %}">
-    <title>{{ title }} - Страница</title>
+    <title>{{ title }}</title>
     {% block css %}{% endblock %}
 
     <style>
@@ -86,7 +85,7 @@
                                                     <ul class="submenu">
                                                         <li><a  href="{% url 'main:index' %}">Главная </a>
                                                         <li><a href="{% url 'main:rules' %}">Правило Школы</a></li>
-<!--                                                        <li><a href="#">Электронные Книги</a></li>-->
+                                                        <li><a href="{% url 'books:books' %}">Электронные Книги</a></li>
                                                         <li><a href="{% url 'main:feedback' %}">Отзывы Пользователей</a></li>
                                                         <li><a href="{% url 'main:contact' %}">Контакты</a></li>
                                                         <li><a href="{% url 'main:about' %}">О Нас</a></li>
@@ -152,13 +151,13 @@
                         <div class="col-md-7">
                             <div class="footer_widget">
                                 <h3 class="footer_title">
-                                    Баткенская школа гимназии номер 4
+                                    Новостная рассылка
                                 </h3>
-<!--                                <form action="#" class="newsletter_form">-->
-<!--                                    {{ search_form.query }}-->
-<!--&lt;!&ndash;                                    <input type="text" placeholder="Email Address">&ndash;&gt;-->
-<!--                                    <button type="submit">Поискать сейчас</button>-->
-<!--                                </form>-->
+                                <form action="#" class="newsletter_form" method="post">
+                                    {% csrf_token %}
+                                    <input type="email" name="email" id="email" placeholder="Введите ваш email" required>
+                                    <button type="submit">Подписаться</button>
+                                </form>
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-5">

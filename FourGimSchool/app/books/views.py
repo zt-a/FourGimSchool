@@ -12,6 +12,11 @@ class BookListView(ListView):
     template_name = 'books/books.html'
     context_object_name = 'books'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Книги'
+        return context
+
 
 class DownloadBookView(View):
     def get(self, request, slug):

@@ -15,6 +15,7 @@ class DocumentListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['main_host'] = MAIN_HOSTS
+        context['title'] = 'Документы'
         return context
 
 

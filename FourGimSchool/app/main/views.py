@@ -1,11 +1,12 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils import translation
 from .forms import *
-from django.shortcuts import render
-from django.db.models import Q
 from .models import *
 from news.models import News
 from personal.models import *
+from django.utils.translation import activate
+from django.http import HttpResponseRedirect
 
 
 # def search(request):
@@ -34,6 +35,19 @@ from personal.models import *
 #     }
 #
 #     return render(request, 'main/search_results.html', context)
+
+def set_language(request):
+    if request.method == 'POST':
+        language = request.POST.get('language')
+        next_page = request.POST.get('next', '/')
+
+        if language:
+            activate(language)
+            request.session['django_language'] = language
+
+        return HttpResponseRedirect(next_page)
+
+    return redirect('main:index')
 
 
 def index(request):

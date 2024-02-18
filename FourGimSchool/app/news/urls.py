@@ -9,3 +9,4 @@ urlpatterns = [
     path('<slug:slug>/add_comment/', add_comment, name='add_comment'),
 ]
 
+

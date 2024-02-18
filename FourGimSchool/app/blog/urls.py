@@ -13,3 +13,4 @@ urlpatterns = [
     path('post/<int:pk>/like/', LikeCreateView.as_view(), name='like_post'),
     path('add_post/', AddPostView.as_view(), name='add_post'),
 ]
+

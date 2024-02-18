@@ -6,3 +6,4 @@ urlpatterns = [
     path('', HistoryListView.as_view(), name='histories'),
     path('<int:history_id>/', HistoryDetailView.as_view(), name='detail_history'),
 ]
+

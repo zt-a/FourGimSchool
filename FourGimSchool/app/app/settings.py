@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'achievement.apps.AchievementConfig',
     'contact_news.apps.ContactNewsConfig',
 
+    'modeltranslation',
     'crispy_forms',
 ]
 
@@ -63,6 +64,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = "app.urls"
@@ -116,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = "ru-ru"
+LANGUAGE_CODE = "ru"
 
 TIME_ZONE = "Asia/Bishkek"
 
@@ -157,9 +159,11 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
+
+LANGUAGES = [
+    ('ky', _('Kyrgyz')),
+    ('ru', _('Russian')),
+]

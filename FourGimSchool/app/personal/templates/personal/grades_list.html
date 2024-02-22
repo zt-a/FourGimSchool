@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 {% if grades %}
 <div class="container box-1170 mt-5 mb-5">
-  <h2>Оценки за четверть</h2>
+  <h2>{% trans "Оценки за четверть" %}</h2>
     <table class="table table-hover">
   <thead>
     <tr>
-        <th scope="col">Ученик</th>
-        <th scope="col">Предмет</th>
-        <th scope="col">Оценка</th>
-        <th scope="col">Четверть</th>
+        <th scope="col">{% trans "Ученик" %}</th>
+        <th scope="col">{% trans "Предмет" %}</th>
+        <th scope="col">{% trans "Оценка" %}</th>
+        <th scope="col">{% trans "Четверть" %}</th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +27,6 @@
 </table>
 </div>
 {% else %}
-<p>Пока что оценки за четверть не опубликованы</p>
+<p>{% trans "Пока что оценки за четверть не опубликованы" %}</p>
 {% endif %}
 {% endblock %}

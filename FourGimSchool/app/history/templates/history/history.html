@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
+{% load i18n %}
+{% load custom_filters  %}
 
 {% block content %}
 <div class="container box-1170 mt-5 mb-5">
-    <h2>Список историй</h2>
+    <h2>{% trans "Список историй" %}</h2>
     <hr>
     {% if histories %}
     <ul>
@@ -31,8 +33,7 @@
       {% endfor %}
     </ul>
     {% else %}
-    <p>Пока что не опубликованы истории</p>
+    <p>{% trans "Пока что не опубликованы истории" %}</p>
     {% endif %}
 </div>
 {% endblock %}
-

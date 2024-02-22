@@ -1,18 +1,22 @@
-from modeltranslation.translator import translator, TranslationOptions
+from modeltranslation.translator import register, TranslationOptions
 from .models import *
 
 
+@register(RulesModel)
 class RulesTranslationOptions(TranslationOptions):
     fields = ('title', 'description',)
 
 
+@register(CategoryModel)
 class CategoryTranslationOptions(TranslationOptions):
     fields = ('name',)
 
 
+@register(FeedbackModel)
 class FeedbackTranslationOptions(TranslationOptions):
     fields = ('message',)
 
 
-translator.register(RulesModel, RulesTranslationOptions)
-translator.register(CategoryModel, CategoryTranslationOptions)
+@register(ContactModel)
+class ContactModelTranslationOptions(TranslationOptions):
+    fields = ('message', )

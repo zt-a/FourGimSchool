@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load contact_tags %}
+{% load i18n %}
 
 {% block content %}
    <!--================Blog Area =================-->
@@ -15,7 +16,7 @@
                      <h2>{{ object.title }}</h2>
                      <ul class="blog-info-link mt-3 mb-4">
                         <li><a href="#"><i class="fa fa-user"></i> {{ object.author.username }}</a></li>
-                        <li><a href="#"><i class="fa fa-comments"></i> {{ object.comment_count }} Comments</a></li>
+                        <li><a href="#"><i class="fa fa-comments"></i> {{ object.comment_count }} {% trans 'Комментарии' %}</a></li>
                      </ul>
                      <p class="excert">
                          {{ object.content }}
@@ -26,7 +27,7 @@
                   <div class="d-sm-flex justify-content-between text-center">
                      <p class="like-info"><span class="align-middle"><i class="fa fa-heart"></i></span> {{ object.likes }}</p>
                      <div class="col-sm-4 text-center my-2 my-sm-0">
-                         <p class="comment-count"><span class="align-middle"><i class="fa fa-comment"></i></span> {{ object.comments_count }} Comments</p>
+                         <p class="comment-count"><span class="align-middle"><i class="fa fa-comment"></i></span> {{ object.comments_count }} {% trans 'Комментарии' %}</p>
                      </div>
                      <ul class="social-icons">
                         <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
@@ -50,7 +51,7 @@
                                   </a>
                                </div>
                                <div class="detials">
-                                  <p>Предыдущая новость</p>
+                                  <p>{% trans 'Предыдущая новость' %}</p>
                                   <a href="{% url 'news:news_detail' slug=previous_news.slug %}">
                                      <h4>{{ previous_news.title }}</h4>
                                   </a>
@@ -60,7 +61,7 @@
                         <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
                            {% if next_news %}
                                <div class="detials">
-                                  <p>Следующая новость</p>
+                                  <p>{% trans 'Следующая новость' %}</p>
                                   <a href="{% url 'news:news_detail' slug=next_news.slug %}">
                                      <h4>{{ next_news.title }}</h4>
                                   </a>
@@ -81,7 +82,7 @@
                   </div>
                </div>
               <div class="comments-area">
-                  <h4>{{ object.comments_count }} Комментариев</h4>
+                  <h4>{{ object.comments_count }} {% blocktrans %}Комментариев{% endblocktrans %}</h4>
                   {% if latest_comments %}
                      {% for comment in latest_comments %}
                         <div class="comment-list">
@@ -113,9 +114,6 @@
                                           </h5>
                                           <p class="date">{{ comment.time_create }}</p>
                                        </div>
-                                       <!-- <div class="reply-btn">
-                                          <a href="#" class="btn-reply text-uppercase">reply</a>
-                                       </div> -->
                                     </div>
                                  </div>
                               </div>
@@ -123,31 +121,29 @@
                         </div>
                      {% endfor %}
                   {% else %}
-                     <p class="text-mute">Нет комментариев</p>
+                     <p class="text-mute">{% trans 'Нет комментариев' %}</p>
                   {% endif %}
                </div>
 
                <div class="comment-form">
                   {% if user.is_authenticated %}
 
-                  <h4>Оставьте комментарий</h4>
+                  <h4>{% trans 'Оставьте комментарий' %}</h4>
                   <form method="post" class="form-contact comment_form" action="{% url 'news:add_comment' slug=object.slug %}" id="commentForm">
                      {% csrf_token %}
                      <div class="row">
                         <div class="col-12">
                            <div class="form-group">
-<!--                              <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9"-->
-<!--                                 placeholder="Write Comment"></textarea>-->
                               {{ comment_form.content }}
                            </div>
                         </div>
                      </div>
                      <div class="form-group">
-                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">Оставить комментарий</button>
+                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">{% trans 'Оставить комментарий' %}</button>
                      </div>
                   </form>
                   {% else %}
-                  <h4>Для не зарегистрированных пользователей оставлять комментарий нельзя</h4>
+                  <h4>{% trans 'Для не зарегистрированных пользователей оставлять комментарий нельзя' %}</h4>
 
                   {% endif %}
                </div>
@@ -158,54 +154,54 @@
                             <form method="get" action="{% url 'news:index' %}">
                                 <div class="form-group">
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="title" placeholder='Поиск Новостей'
+                                        <input type="text" class="form-control" name="title" placeholder='{% trans "Поиск Новостей" %}'
                                                value="{{ request.GET.title }}"
-                                               onfocus="this.placeholder = ''" onblur="this.placeholder = 'Поиск Новостей'">
+                                               onfocus="this.placeholder = ''" onblur="this.placeholder = '{% trans "Поиск Новостей" %}'">
                                         <div class="input-group-append">
                                             <button class="btn" type="submit"><i class="ti-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
                                 <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                    type="submit">Поиск</button>
+                                    type="submit">{% trans 'Поиск' %}</button>
                             </form>
                         </aside>
                         <aside class="single_sidebar_widget post_category_widget">
-                            <h4 class="widget_title">Страницы</h4>
+                            <h4 class="widget_title">{% trans 'Страницы' %}</h4>
                             <ul class="list cat-list">
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Электронные книги</p>
+                                        <p>{% trans 'Электронные книги' %}</p>
                                         <p>(37)</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Событие</p>
+                                        <p>{% trans 'Событие' %}</p>
                                         <p>(10)</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Форум</p>
+                                        <p>{% trans 'Форум' %}</p>
                                         <p>(03)</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Галерея</p>
+                                        <p>{% trans 'Галерея' %}</p>
                                         <p>(11)</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Правило</p>
+                                        <p>{% trans 'Правило' %}</p>
                                         <p>(21)</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Достижение</p>
+                                        <p>{% trans 'Достижение' %}</p>
                                         <p>(09)</p>
                                     </a>
                                 </li>
@@ -213,11 +209,11 @@
                         </aside>
 
                   <aside class="single_sidebar_widget popular_post_widget">
-                            <h3 class="widget_title">Последние новости</h3>
+                            <h3 class="widget_title">{% trans 'Последние новости' %}</h3>
 
                             {% for latest_news_item in latest_news %}
                                 <div class="media post_item">
-                                    <img src="{{ latest_news_item.photo.url }}" alt="post" style="max-width: 75px; height: auto;"> <!-- Замените на ваш путь к изображению -->
+                                    <img src="{{ latest_news_item.photo.url }}" alt="post" style="max-width: 75px; height: auto;">
                                     <div class="media-body">
                                         <a href="{% url 'news:news_detail' slug=latest_news_item.slug %}">
                                             <h3>{{ latest_news_item.title }}</h3>
@@ -229,7 +225,7 @@
                         </aside>
 
                   <aside class="single_sidebar_widget instagram_feeds">
-                     <h4 class="widget_title">Instagram Feeds</h4>
+                     <h4 class="widget_title">{% trans 'Instagram Feeds' %}</h4>
                      <ul class="instagram_row flex-wrap">
                         <li>
                            <a href="#">
@@ -264,7 +260,7 @@
                      </ul>
                   </aside>
                 <aside class="single_sidebar_widget newsletter_widget">
-                    <h4 class="widget_title">Новостная рассылка</h4>
+                    <h4 class="widget_title">{% trans 'Новостная рассылка' %}</h4>
 
                     <form action="#">
                         <div class="form-group">

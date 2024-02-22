@@ -1,8 +1,9 @@
 from django.contrib import admin
 from .models import *
+from modeltranslation.admin import TranslationAdmin
 
 
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(TranslationAdmin):
     list_display = ('id', 'name', 'time_create', 'time_update', 'is_published')
     list_display_links = ('id', 'name',)
     search_fields = ('id', 'name', 'time_create', 'time_update', 'is_published')
@@ -11,7 +12,7 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
-class ContactAdmin(admin.ModelAdmin):
+class ContactAdmin(TranslationAdmin):
     list_display = ('id', 'subject', 'name', 'email', 'time_create', 'time_update', 'is_published')
     list_display_links = ('id', 'subject', 'name', 'email')
     search_fields = ('id', 'subject', 'name', 'email', 'time_create', 'time_update', 'is_published')
@@ -19,7 +20,7 @@ class ContactAdmin(admin.ModelAdmin):
     list_filter = ('id', 'is_published', 'time_create')
 
 
-class FeedbackAdmin(admin.ModelAdmin):
+class FeedbackAdmin(TranslationAdmin):
     list_display = ('id', 'name', 'surname', 'email', 'phone_number', 'time_create', 'time_update', 'is_published',)
     list_display_links = ('id', 'email', 'name', 'surname', 'phone_number')
     search_fields = ('id', 'name', 'surname', 'email', 'time_create', 'time_update', 'is_published')
@@ -27,7 +28,7 @@ class FeedbackAdmin(admin.ModelAdmin):
     list_filter = ('id', 'is_published', 'time_create')
 
 
-class RulesAdmin(admin.ModelAdmin):
+class RulesAdmin(TranslationAdmin):
     list_display = ('id', 'number_rule', 'title', 'time_create', 'time_update', 'is_published')
     list_display_links = ('id', 'number_rule', 'title',)
     search_fields = ('id', 'number_rule', 'title', 'time_create', 'time_update', 'is_published')

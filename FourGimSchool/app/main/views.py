@@ -1,53 +1,19 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import translation
 from .forms import *
 from .models import *
 from news.models import News
 from personal.models import *
-from django.utils.translation import activate
-from django.http import HttpResponseRedirect
 
 
-# def search(request):
-#     query = request.GET.get('q', '')
-#
-#     # Поиск в Model1
-#     results_model1 = .objects.filter(
-#         Q(field1__icontains=query) | Q(field2__icontains=query)
-#     )
-#
-#     # Поиск в Model2
-#     results_model2 = Model2.objects.filter(
-#         Q(field3__icontains=query) | Q(field4__icontains=query)
-#     )
-#
-#     # Поиск в Model3
-#     results_model3 = Model3.objects.filter(
-#         Q(field5__icontains=query) | Q(field6__icontains=query)
-#     )
-#
-#     context = {
-#         'query': query,
-#         'results_model1': results_model1,
-#         'results_model2': results_model2,
-#         'results_model3': results_model3,
-#     }
-#
-#     return render(request, 'main/search_results.html', context)
-
-def set_language(request):
-    if request.method == 'POST':
-        language = request.POST.get('language')
-        next_page = request.POST.get('next', '/')
-
-        if language:
-            activate(language)
-            request.session['django_language'] = language
-
-        return HttpResponseRedirect(next_page)
-
-    return redirect('main:index')
+def switch_language(request, language_code):
+    next_url = request.GET.get('next', f'/{language_code}')
+    if language_code:
+        translation.activate(language_code)
+        request.session['django_language'] = language_code
+    response = redirect(next_url)
+    response.set_cookie('django_language', language_code)
+    return response
 
 
 def index(request):

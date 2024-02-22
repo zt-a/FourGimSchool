@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load contact_tags %}
 
 {% block main_btn %}
-<a href="{% url 'forum:add_post' %}">Добавить пост</a>
+<a href="{% url 'forum:add_post' %}">{% trans 'Добавить пост' %}</a>
 {% endblock %}
 
 
@@ -20,7 +21,7 @@
                      <h2>{{ object.title }}</h2>
                      <ul class="blog-info-link mt-3 mb-4">
                         <li><a href="#"><i class="fa fa-user"></i> {{ object.author.username }}</a></li>
-                        <li><a href="#"><i class="fa fa-comments"></i> {{ object.comment_count }} Comments</a></li>
+                        <li><a href="#"><i class="fa fa-comments"></i> {{ object.comment_count }} {% trans 'Комментарии' %}</a></li>
                      </ul>
                      <p class="excert">
                          {{ object.content }}
@@ -31,7 +32,7 @@
                   <div class="d-sm-flex justify-content-between text-center">
                      <p class="like-info"><span class="align-middle"><i class="fa fa-heart"></i></span> {{ object.likes.count }}</p>
                      <div class="col-sm-4 text-center my-2 my-sm-0">
-                         <p class="comment-count"><span class="align-middle"><i class="fa fa-comment"></i></span> {{ object.comments.count }} Comments</p>
+                         <p class="comment-count"><span class="align-middle"><i class="fa fa-comment"></i></span> {{ object.comments.count }} {% trans 'Комментарии' %}</p>
                      </div>
                      <ul class="social-icons">
                         <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
@@ -55,7 +56,7 @@
                                   </a>
                                </div>
                                <div class="detials">
-                                  <p>Предыдущая новость</p>
+                                  <p>{% trans 'Предыдущая новость' %}</p>
                                   <a href="{% url 'forum:post_detail' slug=previous_post.slug %}">
                                      <h4>{{ previous_post.title }}</h4>
                                   </a>
@@ -65,7 +66,7 @@
                         <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
                            {% if next_post %}
                                <div class="detials">
-                                  <p>Следующая новость</p>
+                                  <p>{% trans 'Следующая новость' %}</p>
                                   <a href="{% url 'forum:post_detail' slug=next_post.slug %}">
                                      <h4>{{ next_post.title }}</h4>
                                   </a>
@@ -86,7 +87,7 @@
                   </div>
                </div>
               <div class="comments-area">
-                  <h4>{{ object.comments_count }} Комментариев</h4>
+                  <h4>{{ object.comments_count }} {% trans 'Комментарии' %}</h4>
                   {% if latest_comments %}
                      {% for comment in latest_comments %}
                         <div class="comment-list">
@@ -128,14 +129,14 @@
                         </div>
                      {% endfor %}
                   {% else %}
-                     <p class="text-mute">Нет комментариев</p>
+                     <p class="text-mute">{% trans 'Нет комментариев' %}</p>
                   {% endif %}
                </div>
 
                <div class="comment-form">
                   {% if user.is_authenticated %}
 
-                  <h4>Оставьте комментарий</h4>
+                  <h4>{% trans 'Оставьте комментарий' %}</h4>
                   <form method="post" class="form-contact comment_form" action="{% url 'forum:add_comment' pk=object.pk %}" id="commentForm">
                      {% csrf_token %}
                      <div class="row">
@@ -148,11 +149,11 @@
                         </div>
                      </div>
                      <div class="form-group">
-                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">Оставить комментарий</button>
+                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">{% trans 'Оставить комментарий' %}</button>
                      </div>
                   </form>
                   {% else %}
-                  <h4>Для не зарегистрированных пользователей оставлять комментарий нельзя</h4>
+                  <h4>{% trans 'Для не зарегистрированных пользователей оставлять комментарий нельзя' %}</h4>
 
                   {% endif %}
                </div>
@@ -163,54 +164,54 @@
                             <form method="get" action="{% url 'forum:post_list' %}">
                                 <div class="form-group">
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="title" placeholder='Поиск Постов'
+                                        <input type="text" class="form-control" name="title" placeholder='{% trans "Поиск Постов" %}'
                                                value="{{ request.GET.title }}"
-                                               onfocus="this.placeholder = ''" onblur="this.placeholder = 'Поиск Постов'">
+                                               onfocus="this.placeholder = ''" onblur="this.placeholder = '{% trans "Поиск Постов" %}'">
                                         <div class="input-group-append">
                                             <button class="btn" type="submit"><i class="ti-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
                                 <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                    type="submit">Поиск</button>
+                                    type="submit">{% trans 'Поиск' %}</button>
                             </form>
                         </aside>
                         <aside class="single_sidebar_widget post_category_widget">
-                            <h4 class="widget_title">Страницы</h4>
+                            <h4 class="widget_title">{% trans 'Страницы' %}</h4>
                             <ul class="list cat-list">
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Электронные книги</p>
+                                        <p>{% trans 'Электронные книги' %}</p>
                                         <p>(37)</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Событие</p>
+                                        <p>{% trans 'Событие' %}</p>
                                         <p>(10)</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Форум</p>
+                                        <p>{% trans 'Форум' %}</p>
                                         <p>(03)</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Галерея</p>
+                                        <p>{% trans 'Галерея' %}</p>
                                         <p>(11)</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Правило</p>
+                                        <p>{% trans 'Правило' %}</p>
                                         <p>(21)</p>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="d-flex">
-                                        <p>Достижение</p>
+                                        <p>{% trans 'Достижение' %}</p>
                                         <p>(09)</p>
                                     </a>
                                 </li>
@@ -218,7 +219,7 @@
                         </aside>
 
                   <aside class="single_sidebar_widget popular_post_widget">
-                            <h3 class="widget_title">Последние новости</h3>
+                            <h3 class="widget_title">{% trans 'Последние новости' %}</h3>
 
                             {% for latest_post_item in latest_post %}
                                 <div class="media post_item">
@@ -269,7 +270,7 @@
                      </ul>
                   </aside>
                 <aside class="single_sidebar_widget newsletter_widget">
-                    <h4 class="widget_title">Новостная рассылка</h4>
+                    <h4 class="widget_title">{% trans 'Новостная рассылка' %}</h4>
 
                     <form action="#">
                         <div class="form-group">

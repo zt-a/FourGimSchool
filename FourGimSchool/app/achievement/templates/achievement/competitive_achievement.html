@@ -1,6 +1,6 @@
 <!-- competitive_achievement.html -->
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% block content %}
 <div class="container box-1170 mb-5 mt-5">
     {% if achievements %}
@@ -10,7 +10,7 @@
                 <div class="col-lg-12">
                     <div class="section_title text-center">
                         <hr>
-                        <h3>Соревновательные достижение</h3>
+                        <h3>{% trans "Соревновательные достижение" %}</h3>
                     </div>
                 </div>
             </div>

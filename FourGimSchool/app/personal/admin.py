@@ -32,6 +32,7 @@ class ClassAdmin(admin.ModelAdmin):
     search_fields = ('id', 'class_name', 'class_teacher', 'classroom_number', 'time_create', 'is_published')
     list_editable = ('is_published',)
     list_filter = ('is_published', 'time_create')
+    prepopulated_fields = {'slug': ('class_name', )}
 
 
 class SchedulesAdmin(admin.ModelAdmin):

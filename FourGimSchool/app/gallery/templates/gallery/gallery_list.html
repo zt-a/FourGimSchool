@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
   <div class="container box-1170">
-    <h2>Список галерей</h2>
+    <h2>{% trans "Список галерей" %}</h2>
     <div class="row gallery-item">
       {% for gallery in galleries %}
         <div class="col-md-4">
@@ -23,11 +24,11 @@
     <div class="row">
       <div class="col">
         {% if user.is_staff or user.is_superuser %}
-          <h2>Добавить фото к галерее</h2>
+          <h2>{% trans "Добавить фото к галерее" %}</h2>
           <form method="post" enctype="multipart/form-data" action="{% url 'gallery:create_gallery' %}">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="genric-btn success large px-5" style="float: right;">Добавить</button>
+            <button type="submit" class="genric-btn success large px-5" style="float: right;">{% trans "Добавить" %}</button>
           </form>
         {% endif %}
       </div>

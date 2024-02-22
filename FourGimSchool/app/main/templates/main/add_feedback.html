@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 <!-- latest_coures_area_start  -->
@@ -8,43 +9,38 @@
             <div class="row justify-content-end">
                 <div class="col-lg-7">
                     <div class="admission_form">
-                        <h3>Оставьте отзыв о нашем сайте и школе</h3>
+                        <h3>{% trans "Оставьте отзыв о нашем сайте и школе" %}</h3>
                         <form action="{% url 'main:add_feedback' %}" method="post">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="single_input">
                                         {{ form.name }}
-<!--                                        <input type="text" placeholder="Имя" >-->
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="single_input">
                                         {{ form.surname }}
-<!--                                        <input type="text" placeholder="Фамилия" >-->
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="single_input">
                                         {{ form.phone_number }}
-<!--                                        <input type="text" placeholder="Номер телефона" >-->
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="single_input">
                                         {{ form.email }}
-<!--                                        <input type="text" placeholder="Адрес электронный почты" >-->
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="single_input">
                                         {{ form.feedback }}
-<!--                                        <textarea cols="30" placeholder="Написать заявку" rows="10"></textarea>-->
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="apply_btn">
-                                        <button class="boxed-btn3" type="submit">Отправить сейчас</button>
+                                        <button class="boxed-btn3" type="submit">{% trans "Отправить сейчас" %}</button>
                                     </div>
                                 </div>
                             </div>

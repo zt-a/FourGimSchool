@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 
 {% block content %}
@@ -6,10 +7,10 @@
     {% if best_students %}
     <div class="row">
 <div class="col-12">
-                <div class="row mb-5 " >
+            <div class="row mb-5 " >
                 <div class="col-lg-12">
                     <div class="section_title text-center">
-                        <h3>Лучшие ученики</h3>
+                        <h3>{% trans "Лучшие ученики" %}</h3>
                     </div>
                 </div>
             </div>
@@ -38,7 +39,7 @@
                 <div class="col-lg-12">
                     <div class="section_title text-center">
                         <hr>
-                        <h3>Достижение сотрудников</h3>
+                        <h3>{% trans 'Достижение сотрудников' %}</h3>
                     </div>
                 </div>
             </div>
@@ -67,7 +68,7 @@
                 <div class="col-lg-12">
                     <div class="section_title text-center">
                         <hr>
-                        <h3>Достижение учеников</h3>
+                        <h3>{% trans 'Достижение учеников' %}</h3>
                     </div>
                 </div>
             </div>
@@ -97,7 +98,7 @@
                 <div class="col-lg-12">
                     <div class="section_title text-center">
                         <hr>
-                        <h3>Соревновательные достижение</h3>
+                        <h3>{% trans 'Соревновательные достижение' %}</h3>
                     </div>
                 </div>
             </div>
@@ -121,7 +122,7 @@
 </div>
     {% endif %}
     {% if not best_students and not achievements_personal and not achievements_students and not achievements %}
-    <p>Пока что достижение не опубликованы</p>
+    <p>{% trans 'Пока что достижение не опубликованы' %}</p>
     {% endif %}
 </div>
 

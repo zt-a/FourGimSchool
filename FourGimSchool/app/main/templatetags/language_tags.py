@@ -5,7 +5,7 @@ from django.conf import settings
 register = template.Library()
 
 
-@register.inclusion_tag('language_dropdown.html')
+@register.inclusion_tag('base.html')
 def language_dropdown():
     languages = [(lang_code, get_language_info(lang_code)['name_local']) for lang_code, _ in settings.LANGUAGES]
 

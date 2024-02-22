@@ -1,9 +1,9 @@
 from django.db import models
 from django.conf import settings
-
+from django.utils.translation import gettext_lazy as _
 
 class Category(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, verbose_name=_('Название'))
 
     def __str__(self):
         return self.name
@@ -16,18 +16,18 @@ class Category(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='comments', verbose_name="Пост")
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='forum_post_comments',
-                               verbose_name="Автор комментария")
-    content = models.TextField(verbose_name="Текст комментария")
-    time_create = models.DateTimeField(verbose_name='Время создание', auto_now_add=True)
-    time_update = models.DateTimeField(verbose_name='Время обновление', auto_now=True)
-    is_published = models.BooleanField(verbose_name='Публикация', default=True)
+                               verbose_name=_("Автор комментария"))
+    content = models.TextField(verbose_name=_("Текст комментария"))
+    time_create = models.DateTimeField(verbose_name=_('Время создание'), auto_now_add=True)
+    time_update = models.DateTimeField(verbose_name=_('Время обновление'), auto_now=True)
+    is_published = models.BooleanField(verbose_name=_('Публикация'), default=True)
 
     def __str__(self):
-        return f"Комментарий от: {self.author.username} на {self.blog.title}"
+        return _(f"Комментарий от: {self.author.username} на {self.blog.title}")
 
     class Meta:
-        verbose_name = "Комментарий"
-        verbose_name_plural = "Комментарии"
+        verbose_name = _("Комментарий")
+        verbose_name_plural = _("Комментарии")
 
 
 class Like(models.Model):

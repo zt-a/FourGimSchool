@@ -1,8 +1,9 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
 
 
 class EventConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "event"
-    verbose_name = 'Событии'
-    verbose_name_plural = 'Событии'
+    verbose_name = _('Событии')
+    verbose_name_plural = _('Событии')

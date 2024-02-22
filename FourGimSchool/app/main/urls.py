@@ -13,8 +13,7 @@ urlpatterns = [
     path('add_feedback/', add_feedback, name='add_feedback'),
     path('rules/', rules, name='rules'),
     path('rules/<slug:slug>/', detail_rules, name='detail_rules'),
-    path('set-language/', set_language, name='set_language'),
-    # path('search/', search, name='search'),
+    path('switch-language/<str:language_code>/', switch_language, name='switch_language'),
 ]
 
 

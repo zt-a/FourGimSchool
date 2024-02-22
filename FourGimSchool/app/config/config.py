@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-_env = False
+_env = True
 
 SECRET_KEY = "django-insecure-jlk94803hk3lj198(*&^%$^&gkj*379670&%$@#$875t7gr!#@@$%^&*43sod"
 

@@ -68,23 +68,6 @@ class PostDetailView(DetailView):
         context['filter'] = PostFilter(self.request.GET, queryset=self.get_queryset())
         context['latest_post'] = Post.objects.filter(is_published=True).order_by('-time_create')[:5]
 
-        # try:
-        #     # Получите предыдущую и следующую новости
-        #     previous_post = Post.objects.filter(
-        #         time_create__lt=self.object.time_create, is_published=True
-        #     ).order_by('-time_create').first()
-        #
-        #     next_post = Post.objects.filter(
-        #         time_create__gt=self.object.time_create, is_published=True
-        #     ).order_by('time_create').first()
-        #
-        #     context['previous_post'] = previous_post
-        #     context['next_post'] = next_post
-        # except Post.DoesNotExist:
-        #     # Объект не найден - установим None для предыдущей и следующей новости
-        #     context['previous_post'] = None
-        #     context['next_post'] = None
-
         return context
 
 

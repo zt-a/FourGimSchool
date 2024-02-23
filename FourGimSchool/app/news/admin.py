@@ -1,8 +1,9 @@
 from django.contrib import admin
 from .models import *
+from modeltranslation.admin import TranslationAdmin
 
 
-class NewsAdmin(admin.ModelAdmin):
+class NewsAdmin(TranslationAdmin):
     list_display = ('id', 'title', 'slug', 'author', 'likes', 'comments_count', 'time_create', 'time_update', 'is_published',)
     list_display_links = ('id', 'title', 'slug', 'author')
     list_filter = ('is_published',)

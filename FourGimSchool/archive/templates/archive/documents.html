@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+<div class="container box_1170">
+    <h1 class="text-center mb-30 mt-5">{% trans 'Список документов' %}</h1>
+    <div class="progress-table-wrap">
+        <div class="progress-table m-5">
+            <div class="table-head">
+                <div class="serial">#</div>
+                <div class="country">{% trans 'Название' %}</div>
+                <div class="visit">{% trans 'Время публикации' %}</div>
+                <div class="percentage">{% trans 'Скачивание и Копирование' %}</div>
+            </div>
+            {% for document in documents %}
+                <div class="table-row">
+                    <div class="serial">{{ document.pk }}</div>
+                    <div class="country">
+                        <a href="{% url 'archive:download_document' document_id=document.id %}">{{ document.title }}</a>
+                    </div>
+                    <div class="visit">
+                        <a href="{% url 'archive:download_document' document_id=document.id %}">{{ document.time_create }}</a>
+                    </div>
+                    <div class="percentage">
+                        <a href="{% url 'archive:download_document' document_id=document.id %}" class="genric-btn info large" style="width: 100%">{% trans 'Скачать' %}</a>
+                        <div class="share-button ml-2">
+                            <button class="genric-btn warning" style="width: 200px" onclick="copyText('copyTarget{{ forloop.counter }}')">
+                                {% trans 'Копировать ссылку' %}
+                            </button>
+                            <input type="text" value="{{ main_host }}{% url 'archive:download_document' document_id=document.id %}" id="copyTarget{{ forloop.counter }}" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+<script>
+    function copyText(elementId) {
+        var copyTarget = document.getElementById(elementId);
+        copyTarget.style.display = 'block';
+        copyTarget.select();
+        document.execCommand('copy');
+        copyTarget.style.display = 'none';
+        alert('{% trans "Ссылка скопирована в буфер обмена:" %} ' + copyTarget.value);
+    }
+</script>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+  <div class="container box-1170">
+    <h2>{% trans "Список галерей" %}</h2>
+    <div class="row gallery-item">
+      {% for gallery in galleries %}
+        <div class="col-md-4">
+          <a href="{{ gallery.image.url }}" class="img-pop-up">
+            <div class="single-gallery-image gallery-image" style="background: url({{ gallery.image.url }});" onmouseover="addGalleryInfo(this)" onmouseout="removeGalleryInfo(this)"></div>
+            <div class="gallery-info-deactivate">
+              <h3>{{ gallery.title }}</h3>
+              <p>{{ gallery.description|slice:":35" }}</p>
+              <p>{{ gallery.time_create }}</p>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+    <br>
+    <hr>
+    <div class="row">
+      <div class="col">
+        {% if user.is_staff or user.is_superuser %}
+          <h2>{% trans "Добавить фото к галерее" %}</h2>
+          <form method="post" enctype="multipart/form-data" action="{% url 'gallery:create_gallery' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="genric-btn success large px-5" style="float: right;">{% trans "Добавить" %}</button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function addGalleryInfo(element) {
+      element.nextElementSibling.classList.add("gallery-info");
+      element.nextElementSibling.classList.remove("gallery-info-deactivate");
+    }
+
+    function removeGalleryInfo(element) {
+      element.nextElementSibling.classList.remove("gallery-info");
+      element.nextElementSibling.classList.add("gallery-info-deactivate");
+    }
+  </script>
+{% endblock %}

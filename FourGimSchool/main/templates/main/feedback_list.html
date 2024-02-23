@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+{% if feedbacks %}
+{% for feedback in feedbacks %}
+<section class="sample-text-area">
+		<div class="container box_1170">
+			<h5 class="text-heading">{{ feedback.name }} {{ feedback.surname }}</h5>
+			<p class="sample-text">
+                {{ feedback.message }}
+			</p>
+		</div>
+	</section>
+{% endfor %}
+{% else %}
+<p>Нет отзывов</p>
+{% endif %}
+{% endblock %}

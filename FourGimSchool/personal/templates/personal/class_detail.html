@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container box-1170">
+    <div class="event_details_area section__padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="single_event d-flex align-items-center">
+                        <div class="thumb">
+                            <img src="{{ class.class_teacher.profile_picture.url }}" alt="">
+                            <div class="date text-center">
+                                <h4>{{ class.class_name }}</h4>
+                                <span>{% trans "Кабинет" %} {{ class.classroom_number }}</span>
+                            </div>
+                        </div>
+                        <div class="event_details_info">
+                            <div class="event_info">
+                                <h4>{{ class.class_teacher.first_name }} {{ class.class_teacher.last_name }}</h4>
+<!--                                <p class="time_create">-->
+<!--                                  <span><i class="flaticon-clock"></i> {{ class.time_create|date:"h:i A" }}</span>-->
+<!--                                  <span><i class="flaticon-calendar"></i> {{ class.time_create|date:"d M Y" }}</span>-->
+<!--                                  <span><i class="flaticon-placeholder"></i> {% trans "Школа гимназия - 4" %}</span>-->
+<!--                                </p>-->
+								<hr>
+                            </div>
+                            <p class="event_info_text">{{ class.class_teacher.first_name }} {{ class.class_teacher.last_name }} {% trans "родились в" %} {{ class.class_teacher.birthday }}.<br>
+                                {% trans "Препадаёт" %} {{ class.class_teacher.subject_taught }} {% trans "в школе гимназии №4 в городе Баткен." %} <br>
+                                {% trans "Стаж работы" %} {{ class.class_teacher.work_experience }} {% trans "лет." %} {% trans "В данной момент является классным руководителям" %} {{ class.class_name }} {% trans "класса." %} <br>
+                                {% trans "Если вам нужна помощь этого учителя вы можете позванить по номеру телефона" %}
+                                <a href="tel: {{ class.class_teacher.phone_number }}">{{ class.class_teacher.phone_number }}</a>
+                                {% trans "или можете написать на почту" %}
+                                <a href="mailto: {{ class.class_teacher.email }}">{{ class.class_teacher.email }} </a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<div class="row">
+				<div class="col-lg-12">
+                    <div class="single_event d-flex align-items-center">
+                        <div class="m-5">
+				<h3 class="mb-30">{% trans "Расписание класса" %} {{ class.class_name }}</h3>
+				<div class="row">
+						<div class="m-5">
+							<h4 class="mb-20">{% trans "Понедельник" %}</h4>
+							<p>{{ class.class_schedule.day1example1 }}</p>
+							<p>{{ class.class_schedule.day1example2 }}</p>
+							<p>{{ class.class_schedule.day1example3 }}</p>
+							<p>{{ class.class_schedule.day1example4 }}</p>
+							<p>{{ class.class_schedule.day1example5 }}</p>
+							<p>{{ class.class_schedule.day1example6 }}</p>
+						</div>
+						<div class="m-5">
+							<h4 class="mb-20">{% trans "Вторник" %}</h4>
+							<p>{{ class.class_schedule.day2example1 }}</p>
+							<p>{{ class.class_schedule.day2example2 }}</p>
+							<p>{{ class.class_schedule.day2example3 }}</p>
+							<p>{{ class.class_schedule.day2example4 }}</p>
+							<p>{{ class.class_schedule.day2example5 }}</p>
+							<p>{{ class.class_schedule.day2example6 }}</p>
+						</div>
+						<div class="m-5">
+							<h4 class="mb-20">{% trans "Среда" %}</h4>
+							<p>{{ class.class_schedule.day3example1 }}</p>
+							<p>{{ class.class_schedule.day3example2 }}</p>
+							<p>{{ class.class_schedule.day3example3 }}</p>
+							<p>{{ class.class_schedule.day3example4 }}</p>
+							<p>{{ class.class_schedule.day3example5 }}</p>
+							<p>{{ class.class_schedule.day3example6 }}</p>
+						</div>
+						<div class="m-5">
+							<h4 class="mb-20">{% trans "Четверг" %}</h4>
+							<p>{{ class.class_schedule.day4example1 }}</p>
+							<p>{{ class.class_schedule.day4example2 }}</p>
+							<p>{{ class.class_schedule.day4example3 }}</p>
+							<p>{{ class.class_schedule.day4example4 }}</p>
+							<p>{{ class.class_schedule.day4example5 }}</p>
+							<p>{{ class.class_schedule.day4example6 }}</p>
+						</div>
+						<div class="m-5">
+							<h4 class="mb-20">{% trans "Пятница" %}</h4>
+							<p>{{ class.class_schedule.day5example1 }}</p>
+							<p>{{ class.class_schedule.day5example2 }}</p>
+							<p>{{ class.class_schedule.day5example3 }}</p>
+							<p>{{ class.class_schedule.day5example4 }}</p>
+							<p>{{ class.class_schedule.day5example5 }}</p>
+							<p>{{ class.class_schedule.day5example6 }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

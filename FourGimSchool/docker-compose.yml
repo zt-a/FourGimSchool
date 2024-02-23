@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment: 
+      POSTGRES_NAME: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+  web:
+    container_name: FourGimSchool
+    build: 
+      context: ./
+      dockerfile: dockerfile
+    restart: always
+    command: bash -c "python /usr/src/FourGimSchool/manage.py migrate --noinput &&
+             python /usr/src/FourGimSchool/manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/usr/src/FourGimSchool
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+
+
+volumes:
+  postgres_data: 

@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load contact_tags  %}
+{% load i18n %}
+
+{% block content %}
+    <!--================Blog Area =================-->
+    <section class="blog_area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mb-5 mb-lg-0">
+                    <div class="blog_left_sidebar">
+                        {% if news_list %}
+                            {% for new in news_list %}
+                                <article class="blog_item">
+                                    <div class="blog_item_img">
+                                        {% if new.photo %}
+                                            <img class="card-img rounded-0  rounded mx-auto d-block" style="max-height: 400px; width: auto" src="{{ new.photo.url }}" alt="">
+                                        {% endif %}
+                                        <a href="#" class="blog_item_date">
+                                            <h3>{{ new.time_create.day }}</h3>
+                                            <p>{{ new.time_create|date:"M" }}</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="blog_details">
+                                        <a class="d-inline-block" href="{% url 'news:news_detail' slug=new.slug %}">
+                                            <h2>{{ new.title }}</h2>
+                                        </a>
+                                        <p>{{ new.content|slice:":150" }}</p>
+                                        <ul class="blog-info-link">
+                                            <li><a href="#"><i class="fa fa-user"></i> {{ new.author.username }}</a></li>
+                                            <li><a href="#"><i class="fa fa-comments"></i> {{ new.comments_count }} {% trans 'Комментарии' %}</a></li>
+                                        </ul>
+                                    </div>
+                                </article>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-info" style="font-size: 1.2em">{% trans 'Пока что нет новостей' %}</p>
+                        {% endif %}
+                        <nav class="blog-pagination justify-content-center d-flex">
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a href="?page=1" class="page-link" aria-label="Previous">
+                                            <i class="ti-angle-left"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% for num in page_obj.paginator.page_range %}
+                                    <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                                        <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                                    </li>
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link" aria-label="Next">
+                                            <i class="ti-angle-right"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="blog_right_sidebar">
+                        <aside class="single_sidebar_widget search_widget">
+                            <form method="get">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="title" placeholder='{% trans "Поиск Новостей" %}'
+                                               value="{{ request.GET.title }}"
+                                               onfocus="this.placeholder = ''" onblur="this.placeholder = '{% trans "Поиск Новостей" %}'">
+                                        <div class="input-group-append">
+                                            <button class="btn" type="submit"><i class="ti-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                        type="submit">{% trans 'Поиск' %}</button>
+                            </form>
+                        </aside>
+
+                        <aside class="single_sidebar_widget post_category_widget">
+                            <h4 class="widget_title">{% trans 'Страницы' %}</h4>
+                            <ul class="list cat-list">
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>{% trans 'Электронные книги' %}</p>
+                                        <p>(37)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>{% trans 'Событие' %}</p>
+                                        <p>(10)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>{% trans 'Форум' %}</p>
+                                        <p>(03)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>{% trans 'Галерея' %}</p>
+                                        <p>(11)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>{% trans 'Правило' %}</p>
+                                        <p>(21)</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>{% trans 'Достижение' %}</p>
+                                        <p>(09)</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </aside>
+
+                        <aside class="single_sidebar_widget popular_post_widget">
+                            <h3 class="widget_title">{% trans 'Последние новости' %}</h3>
+
+                            {% for latest_news_item in latest_news %}
+                                <div class="media post_item">
+                                    <img src="{{ latest_news_item.photo.url }}" alt="post" style="max-width: 75px; height: auto;">
+                                    <div class="media-body">
+                                        <a href="{% url 'news:news_detail' slug=latest_news_item.slug %}">
+                                            <h3>{{ latest_news_item.title }}</h3>
+                                        </a>
+                                        <p>{{ latest_news_item.time_create|date:"F d, Y" }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </aside>
+
+                        <aside class="single_sidebar_widget instagram_feeds">
+                            <h4 class="widget_title">{% trans 'Социальные сети' %}</h4>
+                            <ul class="instagram_row flex-wrap">
+                                <li>
+                                    <a href="#">
+                                        <img class="img-fluid" src="img/post/post_5.png" alt="">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img class="img-fluid" src="img/post/post_6.png" alt="">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img class="img-fluid" src="img/post/post_7.png" alt="">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img class="img-fluid" src="img/post/post_8.png" alt="">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img class="img-fluid" src="img/post/post_9.png" alt="">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img class="img-fluid" src="img/post/post_10.png" alt="">
+                                    </a>
+                                </li>
+                            </ul>
+                        </aside>
+
+                        <aside class="single_sidebar_widget newsletter_widget">
+                            <h4 class="widget_title">{% trans 'Новостная рассылка' %}</h4>
+                            <form action="#">
+                                <div class="form-group">
+                                    {% contact_form layout=True %}
+                                </div>
+                            </form>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================Blog Area =================-->
+{% endblock %}

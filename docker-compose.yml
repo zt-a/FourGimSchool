@@ -9,19 +9,21 @@ services:
     environment: 
       POSTGRES_NAME: postgres
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: postgres
   web:
     container_name: FourGimSchool
     build: 
       context: ./
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     restart: always
     command: bash -c "python /usr/src/FourGimSchool/manage.py migrate --noinput &&
-             python /usr/src/FourGimSchool/manage.py runserver 0.0.0.0:8000"
+               python /usr/src/FourGimSchool/manage.py collectstatic --noinput &&
+               python /usr/src/FourGimSchool/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/usr/src/FourGimSchool
+      - ./static:/usr/src/FourGimSchool/static
     ports:
-      - 8000:8000
+      - "8000:8000"
     depends_on:
       - db
 

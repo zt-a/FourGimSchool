@@ -174,3 +174,4 @@ MODELTRANSLATION_TRANSLATION_FILES = (
 
 if not DEBUG:
     from config.config import *
+

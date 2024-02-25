@@ -81,8 +81,3 @@ black_report/
 
 # Ignore .gitignore itself
 .gitignore
-
-
-migrations/
-*/migrations/
-

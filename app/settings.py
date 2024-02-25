@@ -12,7 +12,7 @@ load_dotenv(dotenv_path)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = os.getenv('DEBUG')
+DEBUG = os.getenv('DEBUG', 'True') == "True"
 
 SECRET_KEY = "django-insecure-d0f5^@y6mavm2*uksamxz+)7o=(473z8znfx7&qyo@tyo&)sog"
 
@@ -181,4 +181,7 @@ MODELTRANSLATION_TRANSLATION_FILES = (
 
 if not DEBUG:
     from config.config import *
+
+
+print(DEBUG)
 

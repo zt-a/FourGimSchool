@@ -1,11 +1,18 @@
-
-import os
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 
+import os
+from dotenv import load_dotenv
+
+
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')
+
+load_dotenv(dotenv_path)
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
 SECRET_KEY = "django-insecure-d0f5^@y6mavm2*uksamxz+)7o=(473z8znfx7&qyo@tyo&)sog"
 

@@ -1,32 +1,49 @@
-version: '3'
-
 services:
   db:
-    image: postgres
-    restart: always
+    image: postgres:latest
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    environment: 
-      POSTGRES_NAME: postgres
+    environment:
+      POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-  web:
-    container_name: FourGimSchool
-    build: 
-      context: ./
-      dockerfile: Dockerfile
-    restart: always
-    command: bash -c "python /usr/src/FourGimSchool/manage.py migrate --noinput &&
-               python /usr/src/FourGimSchool/manage.py collectstatic --noinput &&
-               python /usr/src/FourGimSchool/manage.py runserver 0.0.0.0:8000"
+    networks:
+      - mynetwork
+
+  django:
+    build: .
+    command: bash -c "python /home/ubuntu/FourGimSchool/manage.py migrate && gunicorn --bind 0.0.0.0:8000 app.wsgi:application"
     volumes:
-      - .:/usr/src/FourGimSchool
-      - ./static:/usr/src/FourGimSchool/static
-    ports:
-      - "8000:8000"
+      - .:/home/ubuntu/FourGimSchool
+      - static:/home/ubuntu/FourGimSchool/static
+      - media:/home/ubuntu/FourGimSchool/media
+    expose:
+      - 8000
+    env_file:
+      - ./.env
     depends_on:
       - db
+    networks:
+      - mynetwork
 
+  nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - static:/home/ubuntu/FourGimSchool/static
+      - media:/home/ubuntu/FourGimSchool/media
+    depends_on:
+      - django
+    networks:
+      - mynetwork
 
 volumes:
-  postgres_data: 
+  postgres_data:
+  static:
+  media:
+
+
+networks:
+  mynetwork:

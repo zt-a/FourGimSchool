@@ -6,6 +6,4 @@ class NewsTranslationOptions(TranslationOptions):
     fields = ('title', 'content',)
 
 
-
-
 translator.register(News, NewsTranslationOptions)

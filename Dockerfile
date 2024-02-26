@@ -18,6 +18,9 @@ RUN pip install gunicorn
 # copy app folder
 COPY . $APP_HOME
 
+RUN apt-get update && \
+    apt-get install -y postgresql-client
+
 
 # run python command
 RUN python manage.py makemigrations

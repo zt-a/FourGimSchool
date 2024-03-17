@@ -17,6 +17,9 @@ class BookListView(ListView):
         context['title'] = 'Книги'
         return context
 
+    def get_queryset(self):
+        return Book.objects.only('book_image', 'book_name', 'slug', ).filter(is_published=True)
+
 
 class DownloadBookView(View):
     def get(self, request, slug):

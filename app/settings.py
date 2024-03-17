@@ -19,7 +19,9 @@ SECRET_KEY = "django-insecure-d0f5^@y6mavm2*uksamxz+)7o=(473z8znfx7&qyo@tyo&)sog
 
 ALLOWED_HOSTS = ['*']
 MAIN_HOSTS = 'http://127.0.0.1:8000'
-
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -31,7 +33,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
 INSTALLED_APPS = [
     'modeltranslation',
 
@@ -63,8 +67,29 @@ INSTALLED_APPS = [
     'contact_news.apps.ContactNewsConfig',
 
     'crispy_forms',
-    'rosetta'
+    'rosetta',
+
+    'debug_toolbar',
+    'compressor',
 ]
+
+DEBUG_TOOLBAR_PANELS = [
+    'debug_toolbar.panels.history.HistoryPanel',
+    'debug_toolbar.panels.versions.VersionsPanel',
+    'debug_toolbar.panels.timer.TimerPanel',
+    'debug_toolbar.panels.settings.SettingsPanel',
+    'debug_toolbar.panels.headers.HeadersPanel',
+    'debug_toolbar.panels.request.RequestPanel',
+    'debug_toolbar.panels.sql.SQLPanel',
+    'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+    'debug_toolbar.panels.templates.TemplatesPanel',
+    'debug_toolbar.panels.cache.CachePanel',
+    'debug_toolbar.panels.signals.SignalsPanel',
+    'debug_toolbar.panels.redirects.RedirectsPanel',
+    'debug_toolbar.panels.profiling.ProfilingPanel',
+]
+
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
@@ -146,9 +171,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "zhyrgal.tagaibekov@yandex.ru"
 EMAIL_HOST_PASSWORD = "pbxzozfstwthostb"
 EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
+EMAIL_HOST_USER = "zhyrgal.tagaibekov@yandex.ru"
+
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
@@ -178,6 +205,20 @@ MODELTRANSLATION_TRANSLATION_FILES = (
     'main.translation',
     'news.translation',
 )
+
+
+
+# COMPRESSOR
+
+COMPRESS_ENABLED = True
+COMPRESS_PARSER = 'compressor.parser.HtmlParser'
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+]
+
+
 
 if not DEBUG:
     from config.config import *

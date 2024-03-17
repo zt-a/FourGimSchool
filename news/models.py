@@ -49,25 +49,25 @@ class News(models.Model):
         unique_together = ('slug', 'author')
 
 
-# @receiver(post_save, sender=News)
-# def send_newsletter_on_new_news(sender, instance, created, **kwargs):
-#     url = (
-#         '127.0.0.1:8000' + reverse('news:news_detail', args=[str(instance.slug)])
-#         if settings.DEBUG
-#         else settings.MAIN_HOSTS + reverse('news:news_detail', args=[str(instance.slug)])
-#     )
-#
-#     if created:
-#         subject = _('Новая новость: {}'.format(instance.title))
-#         message = _('У нас есть новая новость! "{}" \n\n{}\n\n{}'.format(
-#             instance.title,
-#             instance.content,
-#             url
-#         ))
-#         from_email = settings.DEFAULT_FROM_EMAIL
-#         recipient_list = Contact.objects.values_list('email', flat=True)
-#
-#         send_mail(subject, message, from_email, recipient_list)
+@receiver(post_save, sender=News)
+def send_newsletter_on_new_news(sender, instance, created, **kwargs):
+    url = (
+        '127.0.0.1:8000' + reverse('news:news_detail', args=[str(instance.slug)])
+        if settings.DEBUG
+        else settings.MAIN_HOSTS + reverse('news:news_detail', args=[str(instance.slug)])
+    )
+
+    if created:
+        subject = _('Новая новость: {}'.format(instance.title))
+        message = _('У нас есть новая новость! "{}" \n\n{}\n\n{}'.format(
+            instance.title,
+            instance.content,
+            url
+        ))
+        from_email = settings.DEFAULT_FROM_EMAIL
+        recipient_list = Contact.objects.values_list('email', flat=True)
+
+        send_mail(subject, message, from_email, recipient_list)
 
 
 class Like(models.Model):

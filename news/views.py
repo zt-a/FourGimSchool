@@ -13,7 +13,11 @@ class NewsListView(ListView):
     paginate_by = 10  # Количество новостей на одной странице
 
     def get_queryset(self):
-        queryset = News.objects.filter(is_published=True)
+        queryset = (
+                    News.objects
+                    .only('photo', 'time_create', 'title', 'slug', 'content', 'comments_count', 'author')
+                    .filter(is_published=True)
+                    .select_related('author'))
         filter = NewsFilter(self.request.GET, queryset=queryset)
         return filter.qs
 
@@ -36,7 +40,7 @@ class NewsListView(ListView):
         context['news_list'] = news
         context['title'] = 'Новости'
         context['filter'] = NewsFilter(self.request.GET, queryset=self.get_queryset())
-        context['latest_news'] = News.objects.filter(is_published=True).order_by('-time_create')[:5]
+        context['latest_news'] = News.objects.only('photo', 'title', 'time_create', 'slug').filter(is_published=True).order_by('-time_create')[:5]
         return context
 
 

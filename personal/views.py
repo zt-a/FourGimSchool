@@ -3,10 +3,10 @@ from .models import *
 
 
 def personal(request):
-    authorities = Authorities.objects.filter(is_published=True)[:3]
-    teachers = Teachers.objects.filter(is_published=True)[:3]
-    parliament = Parliament.objects.filter(is_published=True)[:3]
-    retired = RetiredTeachers.objects.filter(is_published=True)[:3]
+    authorities = Authorities.objects.filter(is_published=True)[:3].select_related('person').prefetch_related('person__subjects_taught')
+    teachers = Teachers.objects.filter(is_published=True)[:3].select_related('person').prefetch_related('person__subjects_taught')
+    parliament = Parliament.objects.filter(is_published=True)[:3].select_related('person')
+    retired = RetiredTeachers.objects.filter(is_published=True)[:3].select_related('person').prefetch_related('person__subjects_taught')
     context = {
         'title': 'Персонал',
         'authorities': authorities,
@@ -18,7 +18,7 @@ def personal(request):
 
 
 def all_personal(request):
-    personals = PersonalModel.objects.filter(is_published=True)
+    personals = PersonalModel.objects.only('profile_picture', 'first_name', 'last_name', 'subjects_taught').filter(is_published=True)
     context = {
         'title': 'Все сотрудники',
         'personals': personals,
@@ -27,7 +27,7 @@ def all_personal(request):
 
 
 def classes(request):
-    Classes = ClassModel.objects.filter(is_published=True)
+    Classes = ClassModel.objects.only('classroom_number', 'slug', 'pk', 'class_name', 'class_teacher').filter(is_published=True)
     context = {
         'title': 'Классы',
         'classes': Classes
@@ -45,7 +45,7 @@ def class_detail(request, slug):
 
 
 def grades_list(request):
-    grades = GradesStudents.objects.filter(is_published=True)
+    grades = GradesStudents.objects.only('subject', 'student', 'grade', 'quarter').filter(is_published=True)
     context = {
         'title': 'Оценки',
         'grades': grades,

@@ -18,15 +18,12 @@ def switch_language(request, language_code):
 
 def index(request):
     feedback_form = FeedbackForm()
-    rules = RulesModel.objects.filter(is_published=True)[:3]
-    news = News.objects.filter(is_published=True)[:2]
-    authorities = Authorities.objects.filter(is_published=True)[:3]
-    teachers = Teachers.objects.filter(is_published=True)[:3]
-    parliament = Parliament.objects.filter(is_published=True)[:3]
-    retired = RetiredTeachers.objects.filter(is_published=True)[:3]
-    context = {
-
-    }
+    rules = RulesModel.objects.only('number_rule', 'title', 'time_create', ).filter(is_published=True)[:3]
+    news = News.objects.only('title', 'slug', 'photo', 'likes', 'comments_count', 'time_create', ).filter(is_published=True)[:2]
+    authorities = Authorities.objects.filter(is_published=True)[:3].select_related('person').prefetch_related('person__subjects_taught')
+    teachers = Teachers.objects.filter(is_published=True)[:3].select_related('person').prefetch_related('person__subjects_taught')
+    parliament = Parliament.objects.filter(is_published=True)[:3].select_related('person')
+    retired = RetiredTeachers.objects.filter(is_published=True)[:3].select_related('person').prefetch_related('person__subjects_taught')
 
     if feedback_form.is_valid():
         feedback_form.save()
@@ -67,7 +64,7 @@ def about(request):
 
 
 def rules(request):
-    rules = RulesModel.objects.filter(is_published=True)
+    rules = RulesModel.objects.only('number_rule', 'title', 'time_create', ).filter(is_published=True)
     context = {
         'title': 'Правило',
         'rules': rules
@@ -77,8 +74,8 @@ def rules(request):
 
 def detail_rules(request, slug):
     rule = get_object_or_404(RulesModel, slug=slug, is_published=True)
-    prev_rule = RulesModel.objects.filter(number_rule=rule.number_rule - 1).first()
-    next_rule = RulesModel.objects.filter(number_rule=rule.number_rule + 1).first()
+    prev_rule = RulesModel.objects.only('slug').filter(number_rule=rule.number_rule - 1).first()
+    next_rule = RulesModel.objects.only('slug').filter(number_rule=rule.number_rule + 1).first()
 
     context = {
         'title': f'Правило №{rule.pk}',
@@ -103,6 +100,6 @@ def add_feedback(request):
 
 
 def feedback_list(request):
-    feedbacks = FeedbackModel.objects.filter(is_published=True).order_by('-time_create')
+    feedbacks = FeedbackModel.objects.only('name', 'surname', 'message').filter(is_published=True).order_by('-time_create')
 
     return render(request, 'main/feedback_list.html', {'feedbacks': feedbacks, 'title': 'Отзыв'})

@@ -149,18 +149,10 @@
             <div class="col-lg-12">
                 <nav class="custom_tabs text-center">
                     <div class="nav" id="nav-tab" role="tablist">
-                        {% if authorities %}
                         <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">{% trans "Начальство" %}</a>
-                        {% endif %}
-                        {% if teachers %}
                         <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">{% trans "Учителя" %} </a>
-                        {% endif %}
-                        {% if retireds %}
-                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tabpanel" aria-controls="nav-contact" aria-selected="false">{% trans "Учителя в отставке" %}</a>
-                        {% endif %}
-                        {% if parliaments %}
-                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact2" role="tab" aria-controls="nav-contact" aria-selected="false">{% trans "Парламент" %}</a>
-                        {% endif %}
+<!--                        <a class="nav-item nav-link" id="nav-contact-tab1" data-toggle="tab" href="#nav-contact" role="tabpanel" aria-controls="nav-contact" aria-selected="false">{% trans "Учителя в отставке" %}</a>-->
+                        <a class="nav-item nav-link" id="nav-contact-tab2" data-toggle="tab" href="#nav-contact2" role="tab" aria-controls="nav-contact" aria-selected="false">{% trans "Парламент" %}</a>
                     </div>
                 </nav>
             </div>
@@ -189,7 +181,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="single__program" style="background: #f2f6fc;">
                             <div class="program_thumb">
-                                <img src="{{ person.person.profile_picture.url }}" alt="" style="border-radius: 5px; width: auto; max-height: 350px" class="img-fluid rounded mx-auto d-block">
+                                <img src="{{ person.person.profile_picture.url}}" alt="" style="border-radius: 5px; width: auto; max-height: 350px" class="img-fluid rounded mx-auto d-block">
                             </div>
                             <div class="program__content p-4">
                                 <h4>{{ person.person.first_name }} {{ person.person.last_name }}</h4>
@@ -200,7 +192,7 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab1">
                 <div class="row">
                     {% for person in retireds %}
                     <div class="col-lg-4 col-md-6">
@@ -217,7 +209,7 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="tab-pane fade" id="nav-contact2" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <div class="tab-pane fade" id="nav-contact2" role="tabpanel" aria-labelledby="nav-contact-tab2">
                 <div class="row">
                     {% for person in parliaments %}
                     <div class="col-lg-4 col-md-6">
@@ -227,7 +219,6 @@
                             </div>
                             <div class="program__content p-4">
                                 <h4>{{ person.person.first_name }} {{ person.person.last_name }}</h4>
-                                <p class="text-center">{% trans "Предметы:" %} {% for subject in person.person.subjects_taught.all %} {{ subject.subject_name }} {% endfor %}</p>
                             </div>
                         </div>
                     </div>
@@ -305,7 +296,25 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-10">
+                {% if rules %}
+                {% for rule in rules %}
+                <div class="single_event d-flex align-items-center">
+                    <div class="date text-center">
+                        <span>{{ rule.number_rule }}</span>
+                        <p>{% trans "ПРАВИЛО" %}</p>
+                    </div>
+                    <div class="event_info">
+                        <a href="{% url 'main:detail_rules' slug=rule.slug %}">
+                            <h4>{{ rule.title }}</h4>
+                         </a>
+                        <p><span><i class="flaticon-clock"></i> {{ rule.time_create|time:"g:i A" }}</span> <span><i class="flaticon-calendar"></i> {{ rule.time_create|date:"jM Y" }}</span> <span><i class="flaticon-placeholder"></i> {% trans "Школа номер - 4" %}</span></p>
+<!--                        <p><span> <i class="flaticon-clock"></i> 10:30 pm</span> <span> <i class="flaticon-calendar"></i> 21Nov 2020 </span> <span> <i class="flaticon-placeholder"></i> AH Oditoriam</span> </p>-->
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
                 <h3 class="text-center">{% trans "Правила пока не опубликованы" %}</h3>
+                {% endif %}
             </div>
         </div>
     </div>

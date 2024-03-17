@@ -17,7 +17,7 @@ class PostListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        queryset = Post.objects.filter(is_published=True)
+        queryset = Post.objects.only('time_create', 'title', 'content', 'author', 'pk').filter(is_published=True)
         filter = PostFilter(self.request.GET, queryset=queryset)
         return filter.qs
 

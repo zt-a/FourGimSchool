@@ -15,4 +15,4 @@ class EventListView(ListView):
         return context
 
     def get_queryset(self):
-        return Event.objects.filter(is_published=True)
+        return Event.objects.only('image', 'time_create', 'title', 'content', ).filter(is_published=True)

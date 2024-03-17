@@ -18,7 +18,7 @@ class GalleryListView(ListView):
         return context
 
     def get_queryset(self):
-        return Gallery.objects.filter(is_published=True)
+        return Gallery.objects.only('image', 'title', 'description', 'time_create').filter(is_published=True)
 
 
 class GalleryCreateView(UserPassesTestMixin, CreateView):

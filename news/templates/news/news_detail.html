@@ -170,39 +170,33 @@
                             <h4 class="widget_title">{% trans 'Страницы' %}</h4>
                             <ul class="list cat-list">
                                 <li>
-                                    <a href="#" class="d-flex">
+                                    <a href="{% url 'books:books' %}" class="d-flex">
                                         <p>{% trans 'Электронные книги' %}</p>
-                                        <p>(37)</p>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="d-flex">
+                                    <a href="{% url 'event:event_list' %}" class="d-flex">
                                         <p>{% trans 'Событие' %}</p>
-                                        <p>(10)</p>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="d-flex">
+                                    <a href="{% url 'forum:post_list' %}" class="d-flex">
                                         <p>{% trans 'Форум' %}</p>
-                                        <p>(03)</p>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="d-flex">
+                                    <a href="{% url 'gallery:gallery_list' %}" class="d-flex">
                                         <p>{% trans 'Галерея' %}</p>
-                                        <p>(11)</p>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="d-flex">
+                                    <a href="{% url 'main:rules' %}" class="d-flex">
                                         <p>{% trans 'Правило' %}</p>
-                                        <p>(21)</p>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="d-flex">
+                                    <a href="{% url 'achievement:achievement' %}" class="d-flex">
                                         <p>{% trans 'Достижение' %}</p>
-                                        <p>(09)</p>
                                     </a>
                                 </li>
                             </ul>
